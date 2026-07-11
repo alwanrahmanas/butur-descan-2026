@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- CDNs -->
@@ -24,45 +24,45 @@
     <style>
         /* CSS Variables */
         :root {
-            --color-bg: oklch(0.965 0.008 75);
-            --color-surface: oklch(0.99 0.004 80);
-            --color-surface-2: oklch(0.95 0.01 75);
-            --color-border: oklch(0.88 0.012 75);
-            --color-text: #1a1a18;
-            --color-text-muted: #6b6860;
-            --color-primary: oklch(0.50 0.14 25);
-            --color-primary-hover: oklch(0.44 0.15 25);
-            --color-primary-highlight: oklch(0.50 0.14 25 / 0.06);
-            --color-accent: oklch(0.50 0.14 25);
+            --color-bg: #F5F9F7;
+            --color-surface: #FAFCF9;
+            --color-surface-2: #EEF4F0;
+            --color-border: #C6D9CC;
+            --color-text: #1A2E1E;
+            --color-text-muted: #5A7A63;
+            --color-primary: #1B6E3C;
+            --color-primary-hover: #145A30;
+            --color-primary-highlight: rgba(27, 110, 60, 0.06);
+            --color-accent: #00C47A;
             --color-warning: #a8711a;
             --color-warning-bg: rgba(168, 113, 26, 0.1);
             --color-success: #3a7d54;
             --color-error: #b33b3b;
 
-            --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
-            --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', 'Plus Jakarta Sans', system-ui, sans-serif;
 
             --radius-sm: 0.25rem;
             --radius-md: 0.375rem;
             --radius-lg: 0.5rem;
             --radius-xl: 0.75rem;
-            --shadow-sm: 0 1px 2px rgba(26, 26, 24, 0.04);
-            --shadow-md: 0 4px 16px rgba(26, 26, 24, 0.07);
-            --shadow-lg: 0 12px 40px rgba(26, 26, 24, 0.1);
+            --shadow-sm: 0 1px 2px rgba(10, 42, 26, 0.05);
+            --shadow-md: 0 4px 16px rgba(10, 42, 26, 0.08);
+            --shadow-lg: 0 12px 40px rgba(10, 42, 26, 0.12);
             --container-max: 1140px;
         }
 
         .dark {
-            --color-bg: #151413;
-            --color-surface: #1c1b19;
-            --color-surface-2: #222120;
-            --color-border: #333230;
-            --color-text: #e8e5df;
-            --color-text-muted: #9b9790;
-            --color-primary: oklch(0.68 0.14 25);
-            --color-primary-hover: oklch(0.74 0.15 25);
-            --color-primary-highlight: oklch(0.68 0.14 25 / 0.1);
-            --color-accent: oklch(0.68 0.14 25);
+            --color-bg: #0D1F14;
+            --color-surface: #132A1C;
+            --color-surface-2: #1A3524;
+            --color-border: #254A32;
+            --color-text: #E1EBE5;
+            --color-text-muted: #8AAB95;
+            --color-primary: #00C47A;
+            --color-primary-hover: #2EDFA0;
+            --color-primary-highlight: rgba(0, 196, 122, 0.1);
+            --color-accent: #00C47A;
             --color-warning: #d4a24a;
             --color-warning-bg: rgba(212, 162, 74, 0.12);
             --color-success: #5aad72;
@@ -356,7 +356,8 @@
 
         .hero-content {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1fr;
+            max-width: 900px;
             gap: 3rem;
             align-items: start;
         }
@@ -494,6 +495,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1rem;
             margin-top: 2rem;
+            justify-content: start;
         }
 
         .lokus-card {
@@ -503,6 +505,8 @@
             border: 1px solid var(--color-border);
             text-align: left;
             transition: box-shadow 0.25s ease;
+            max-width: 420px;
+            width: 100%;
         }
 
         .lokus-card:hover {
@@ -1278,18 +1282,6 @@
                                 &amp; Budaya</a>
                         </div>
                     </div>
-                    <aside class="hero-panel" aria-label="Ringkasan data keluarga">
-                        <div class="hero-panel-header">
-                            <h2 class="hero-panel-title">Ringkasan Dataset</h2>
-                            <span class="hero-panel-chip"><i data-lucide="database"></i> Data aktif</span>
-                        </div>
-                        <div class="metric-strip">
-                            <div class="metric-tile"><span>Lokus</span><strong id="metricLokus">1</strong></div>
-                            <div class="metric-tile"><span>Sumber</span><strong>Sheet</strong></div>
-                            <div class="metric-tile"><span>Status</span><strong>Aktif</strong></div>
-                            <div class="metric-tile"><span>Tahun</span><strong>2026</strong></div>
-                        </div>
-                    </aside>
                 </div>
                 <div class="lokus-grid" id="berandaLokusGrid"></div>
             </div>
@@ -1541,7 +1533,7 @@
         const USE_LOCAL_XLSX = false;
         const LOCAL_XLSX_PATH = 'data.xlsx';
 
-        const SPREADSHEET_ID = "1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe";
+        const LOKUS_ID = "desa-malalanda";
         const SHEET_GIDS = {
             keluarga: "515567017",
             lapangan: "842096498",
@@ -1551,7 +1543,6 @@
             disabilitas: "638945844",
             foto: ""
         };
-        const POPUP_SPREADSHEET_ID = '1DlOHH6M3QiEot8Jv_ik-XUIpCx9Q-BzJJVo3H8UB6pI';
 
         const lokusList = ["Desa Malalanda"];
 
@@ -1785,12 +1776,11 @@
                     return;
                 }
             } else {
-                // ── Google Sheets CSV mode ──
-                if (!SPREADSHEET_ID) { alert("SPREADSHEET_ID belum diisi."); return; }
+                // ── Google Sheets CSV mode (via Proxy Backend) ──
                 try {
                     const loadCSV = (gid) => new Promise((resolve, reject) => {
                         if (!gid) { resolve({ data: [] }); return; }
-                        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gid}`;
+                        const url = `https://buton-utara.net/api/data.php?lokus=${LOKUS_ID}&gid=${gid}`;
                         Papa.parse(url, {
                             download: true, header: false, dynamicTyping: true, skipEmptyLines: true,
                             complete: res => {
@@ -1874,11 +1864,11 @@
         }
         function sumField(arr, key) { return arr.reduce((s, r) => s + (Number(r[key]) || 0), 0); }
 
-        const PALETTE = ['#8c5a3c','#5a7d6a','#c49a6c','#b85c4d','#a39080','#d4a27a','#6b6860','#7a9e7e','#c47a5c','#9b8a6e','#6e8b74','#c4946c'];
+        const PALETTE = ['#1B6E3C','#00C47A','#3B9FD4','#0A5C2E','#5AAD72','#2E8B57','#7ECBA1','#145A30','#40B080','#6DB68A','#0D4A3A','#8FD4A8'];
 
         function getChartOpts() {
             const isDark = document.documentElement.classList.contains('dark');
-            const txtColor = isDark ? '#e8e5df' : '#1a1a18';
+            const txtColor = isDark ? '#E1EBE5' : '#1A2E1E';
             return {
                 responsive: true, maintainAspectRatio: false,
                 plugins: { legend: { labels: { color: txtColor, font: { family: "'Plus Jakarta Sans'" } } } }
@@ -1998,7 +1988,7 @@
             destroyChart('chartBantuan');
             chartObjs['chartBantuan'] = new Chart(document.getElementById('chartBantuan'), {
                 type: 'bar',
-                data: { labels: programs.map(p => p.label), datasets: [{ label: 'Keluarga', data: programs.map(p => klg.filter(k => k[p.key] === 'Ya').length), backgroundColor: '#5a7d6a' }] },
+                data: { labels: programs.map(p => p.label), datasets: [{ label: 'Keluarga', data: programs.map(p => klg.filter(k => k[p.key] === 'Ya').length), backgroundColor: '#1B6E3C' }] },
                 options: getChartOpts()
             });
 
@@ -2076,7 +2066,7 @@
                 destroyChart('chartLapanganUsaha');
                 chartObjs['chartLapanganUsaha'] = new Chart(document.getElementById('chartLapanganUsaha'), {
                     type: 'bar',
-                    data: { labels: sorted.map(e => e[0].length > 40 ? e[0].substring(0, 37) + '...' : e[0]), datasets: [{ label: 'Jumlah ART', data: sorted.map(e => e[1]), backgroundColor: '#5a7d6a' }] },
+                    data: { labels: sorted.map(e => e[0].length > 40 ? e[0].substring(0, 37) + '...' : e[0]), datasets: [{ label: 'Jumlah ART', data: sorted.map(e => e[1]), backgroundColor: '#1B6E3C' }] },
                     options: { ...getChartOpts(), indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { title: ctx => { const idx = ctx[0].dataIndex; return sorted[idx][0]; } } } } }
                 });
             }
@@ -2099,7 +2089,7 @@
                     destroyChart('chartDisabilitas');
                     chartObjs['chartDisabilitas'] = new Chart(document.getElementById('chartDisabilitas'), {
                         type: 'bar',
-                        data: { labels: filteredDisab.map(e => e[0]), datasets: [{ label: 'Jumlah', data: filteredDisab.map(e => e[1]), backgroundColor: '#b85c4d' }] },
+                        data: { labels: filteredDisab.map(e => e[0]), datasets: [{ label: 'Jumlah', data: filteredDisab.map(e => e[1]), backgroundColor: '#3B9FD4' }] },
                         options: getChartOpts()
                     });
                 }
@@ -2227,41 +2217,61 @@
         window.closePhotoPopup = closePhotoPopup;
 
         function fetchVillagePopup() {
-            const popupUrl = `https://docs.google.com/spreadsheets/d/${POPUP_SPREADSHEET_ID}/export?format=csv`;
+            const popupUrl = `https://buton-utara.net/api/data.php?type=popup`;
             const hardcodeId = '1gPDFURYAZTCWGWZxz5pPUwkdI5quy0G9';
             const hardcodeLink = 'https://drive.google.com/file/d/1gPDFURYAZTCWGWZxz5pPUwkdI5quy0G9/view?usp=sharing';
+            const villageDir = "malalanda";
+            let resolved = false;
 
-            function triggerPopup(fileId, driveLink) {
+            function triggerPopup(fileId, driveLink, source) {
+                if (resolved) return;
+                resolved = true;
+                console.log(`[Popup] ${source} — file: ${fileId}`);
                 setTimeout(() => {
                     document.getElementById('photoPopupIframe').src = `https://drive.google.com/file/d/${fileId}/preview`;
                     const linkEl = document.getElementById('photoPopupLink');
                     if (linkEl) linkEl.href = driveLink;
                     document.getElementById('photoPopupOverlay').classList.add('active');
                     document.body.style.overflow = 'hidden';
-                }, 500); // deteksi otomatis
+                }, 500);
             }
+
+            // Timeout: if spreadsheet takes too long, use fallback
+            const popupTimeout = setTimeout(() => {
+                triggerPopup(hardcodeId, hardcodeLink, 'Timeout fallback');
+            }, 8000);
 
             Papa.parse(popupUrl, {
                 download: true,
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
-                    if (results.data && results.data.length > 0) {
-                        const villageDir = "malalanda";
-                        const row = results.data.find(r => r.nama && (r.nama.toLowerCase().includes(villageDir) || villageDir.includes(r.nama.toLowerCase())));
-                        if (row && row.link) {
-                            // Extract ID from link like https://drive.google.com/file/d/1gPDFURYAZTCWG.../view
-                            const fileIdMatch = row.link.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                            const fileId = fileIdMatch ? fileIdMatch[1] : row.link;
-                            triggerPopup(fileId, row.link);
+                    clearTimeout(popupTimeout);
+                    try {
+                        const rows = (results.data || []).filter(r => r.nama && r.link);
+                        const row = rows.find(r => {
+                            const n = r.nama.trim().toLowerCase();
+                            return n.includes(villageDir) || villageDir.includes(n);
+                        });
+                        if (row) {
+                            const m = row.link.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                            if (m && m[1]) {
+                                triggerPopup(m[1], row.link, 'Spreadsheet OK');
+                            } else {
+                                triggerPopup(hardcodeId, hardcodeLink, 'Invalid link format');
+                            }
                         } else {
-                            triggerPopup(hardcodeId, hardcodeLink);
+                            triggerPopup(hardcodeId, hardcodeLink, 'No row for ' + villageDir);
                         }
-                    } else {
-                        triggerPopup(hardcodeId, hardcodeLink);
+                    } catch (e) {
+                        console.error('[Popup] Parse error:', e);
+                        triggerPopup(hardcodeId, hardcodeLink, 'Parse error');
                     }
                 },
-                error: function() {
-                    triggerPopup(hardcodeId, hardcodeLink);
+                error: function(err) {
+                    clearTimeout(popupTimeout);
+                    console.warn('[Popup] Fetch error:', err);
+                    triggerPopup(hardcodeId, hardcodeLink, 'Fetch error');
                 }
             });
         }

@@ -9,11 +9,10 @@ Write-Host "Membuat file zip untuk deploy..."
 # Daftar folder dan file yang akan dipaketkan
 $FilesToZip = @(
     "api",
-    "assets",
     "Laangke",
     "Lakonea",
     "Malalanda",
-    "desa-cantik-buton-utara.html",
+    "index.html",
     "desa-cantik-buton-utara-keluarga.html"
 )
 

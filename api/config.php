@@ -11,6 +11,18 @@ return [
     'openai_model' => getenv('OPENAI_MODEL') ?: 'gpt-5.4-mini-2026-03-17',
     'max_completion_tokens' => 500,
 
+    // Google Sheets Proxy Config
+    'sheet_ids' => [
+        'desa-laangke' => getenv('SHEET_ID_LAANGKE') ?: '1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG',
+        'kelurahan-lakonea' => getenv('SHEET_ID_LAKONEA') ?: '1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8',
+        'desa-malalanda' => getenv('SHEET_ID_MALALANDA') ?: '1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe',
+        'popup' => getenv('SHEET_ID_POPUP') ?: '1DlOHH6M3QiEot8Jv_ik-XUIpCx9Q-BzJJVo3H8UB6pI',
+    ],
+    
+    // Proxy Cache Config (untuk CSV Google Sheets)
+    'proxy_cache_dir' => __DIR__ . '/cache',
+    'proxy_cache_ttl' => 300, // 5 menit
+
     // Maksimal request AI non-cache per IP per jam (Ditingkatkan untuk kemudahan testing).
     'rate_limit_max' => 10,
     'rate_limit_file' => __DIR__ . '/.rate_limits.json',

@@ -1,19 +1,17 @@
-# Protect sensitive files from direct access
-<FilesMatch "^(config\.php|\.rate_limits\.json|\.ai_cache\.json|\.env\.example)$">
+# Blokir akses langsung ke semua file PHP KECUALI ai-insight.php dan data.php
+<FilesMatch "^(?!(ai-insight\.php|data\.php)$).+\.php$">
     Require all denied
 </FilesMatch>
 
 # Block directory listing
 Options -Indexes
 
-# Blokir akses langsung ke file PHP selain ai-insight.php
-<FilesMatch "^(?!ai-insight\.php$).+\.php$">
-    Require all denied
-</FilesMatch>
-
-# Set API key via environment variable (isi di hosting cPanel: SetEnv)
-# Atau set langsung di sini (PASTIKAN .htaccess tidak dapat diakses publik):
-SetEnv OPENAI_API_KEY "YOUR_OPENAI_API_KEY_HERE"
+# Set API key & Spreadsheet ID via environment variable
+SetEnv OPENAI_API_KEY "..."
+SetEnv SHEET_ID_LAANGKE "1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG"
+SetEnv SHEET_ID_LAKONEA "1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8"
+SetEnv SHEET_ID_MALALANDA "1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe"
+SetEnv SHEET_ID_POPUP "1DlOHH6M3QiEot8Jv_ik-XUIpCx9Q-BzJJVo3H8UB6pI"
 
 # Security Headers
 <IfModule mod_headers.c>
@@ -23,7 +21,6 @@ SetEnv OPENAI_API_KEY "YOUR_OPENAI_API_KEY_HERE"
     Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
 
-# Rate limit: Batasi request body size (2MB max)
 <IfModule mod_php.c>
     php_value post_max_size 2M
     php_value upload_max_filesize 0

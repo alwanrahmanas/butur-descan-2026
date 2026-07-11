@@ -72,6 +72,7 @@ head_section = existing[:head_end_idx]
 
 # ─── 2. TEMPLATE BODY HTML ───────────────────────────────────────
 def get_body_html(v):
+    prefix_title = "Kelurahan Cantik" if "Kelurahan" in v['name'] else "Desa Cantik"
     return f'''
 
 <body>
@@ -110,7 +111,7 @@ def get_body_html(v):
                 <div class="hero-content">
                     <div class="hero-copy">
                         <div class="hero-eyebrow"><i data-lucide="users-round"></i> Dashboard Profil Keluarga</div>
-                        <h1>Desa Cantik<br>{v['name']}</h1>
+                        <h1>{prefix_title}<br>{v['name']}</h1>
                         <p>Dashboard statistik berbasis <strong>Profil Keluarga SDGs Desa</strong> untuk
                             {v['name']} — Kuesioner SDGSDES.26 Tahun 2026.</p>
                         <div class="hero-cta">
@@ -120,18 +121,6 @@ def get_body_html(v):
                                 &amp; Budaya</a>
                         </div>
                     </div>
-                    <aside class="hero-panel" aria-label="Ringkasan data keluarga">
-                        <div class="hero-panel-header">
-                            <h2 class="hero-panel-title">Ringkasan Dataset</h2>
-                            <span class="hero-panel-chip"><i data-lucide="database"></i> Data aktif</span>
-                        </div>
-                        <div class="metric-strip">
-                            <div class="metric-tile"><span>Lokus</span><strong id="metricLokus">1</strong></div>
-                            <div class="metric-tile"><span>Sumber</span><strong>Sheet</strong></div>
-                            <div class="metric-tile"><span>Status</span><strong>Aktif</strong></div>
-                            <div class="metric-tile"><span>Tahun</span><strong>2026</strong></div>
-                        </div>
-                    </aside>
                 </div>
                 <div class="lokus-grid" id="berandaLokusGrid"></div>
             </div>
@@ -388,7 +377,7 @@ def get_js(v):
         const USE_LOCAL_XLSX = false;
         const LOCAL_XLSX_PATH = 'data.xlsx';
 
-        const SPREADSHEET_ID = "''' + v['spreadsheet_id'] + '''";
+        const LOKUS_ID = "''' + v['id'] + '''";
         const SHEET_GIDS = {
             keluarga: "''' + v['gids']['keluarga'] + '''",
             lapangan: "''' + v['gids']['lapangan'] + '''",
@@ -398,7 +387,6 @@ def get_js(v):
             disabilitas: "''' + v['gids']['disabilitas'] + '''",
             foto: "''' + v['gids']['foto'] + '''"
         };
-        const POPUP_SPREADSHEET_ID = '1DlOHH6M3QiEot8Jv_ik-XUIpCx9Q-BzJJVo3H8UB6pI';
 
         const lokusList = ''' + v['lokus_js'] + ''';
 
@@ -632,12 +620,11 @@ def get_js(v):
                     return;
                 }
             } else {
-                // ── Google Sheets CSV mode ──
-                if (!SPREADSHEET_ID) { alert("SPREADSHEET_ID belum diisi."); return; }
+                // ── Google Sheets CSV mode (via Proxy Backend) ──
                 try {
                     const loadCSV = (gid) => new Promise((resolve, reject) => {
                         if (!gid) { resolve({ data: [] }); return; }
-                        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${gid}`;
+                        const url = `https://buton-utara.net/api/data.php?lokus=${LOKUS_ID}&gid=${gid}`;
                         Papa.parse(url, {
                             download: true, header: false, dynamicTyping: true, skipEmptyLines: true,
                             complete: res => {
@@ -721,11 +708,11 @@ def get_js(v):
         }
         function sumField(arr, key) { return arr.reduce((s, r) => s + (Number(r[key]) || 0), 0); }
 
-        const PALETTE = ['#8c5a3c','#5a7d6a','#c49a6c','#b85c4d','#a39080','#d4a27a','#6b6860','#7a9e7e','#c47a5c','#9b8a6e','#6e8b74','#c4946c'];
+        const PALETTE = ['#1B6E3C','#00C47A','#3B9FD4','#0A5C2E','#5AAD72','#2E8B57','#7ECBA1','#145A30','#40B080','#6DB68A','#0D4A3A','#8FD4A8'];
 
         function getChartOpts() {
             const isDark = document.documentElement.classList.contains('dark');
-            const txtColor = isDark ? '#e8e5df' : '#1a1a18';
+            const txtColor = isDark ? '#E1EBE5' : '#1A2E1E';
             return {
                 responsive: true, maintainAspectRatio: false,
                 plugins: { legend: { labels: { color: txtColor, font: { family: "'Plus Jakarta Sans'" } } } }
@@ -845,7 +832,7 @@ def get_js(v):
             destroyChart('chartBantuan');
             chartObjs['chartBantuan'] = new Chart(document.getElementById('chartBantuan'), {
                 type: 'bar',
-                data: { labels: programs.map(p => p.label), datasets: [{ label: 'Keluarga', data: programs.map(p => klg.filter(k => k[p.key] === 'Ya').length), backgroundColor: '#5a7d6a' }] },
+                data: { labels: programs.map(p => p.label), datasets: [{ label: 'Keluarga', data: programs.map(p => klg.filter(k => k[p.key] === 'Ya').length), backgroundColor: '#1B6E3C' }] },
                 options: getChartOpts()
             });
 
@@ -923,7 +910,7 @@ def get_js(v):
                 destroyChart('chartLapanganUsaha');
                 chartObjs['chartLapanganUsaha'] = new Chart(document.getElementById('chartLapanganUsaha'), {
                     type: 'bar',
-                    data: { labels: sorted.map(e => e[0].length > 40 ? e[0].substring(0, 37) + '...' : e[0]), datasets: [{ label: 'Jumlah ART', data: sorted.map(e => e[1]), backgroundColor: '#5a7d6a' }] },
+                    data: { labels: sorted.map(e => e[0].length > 40 ? e[0].substring(0, 37) + '...' : e[0]), datasets: [{ label: 'Jumlah ART', data: sorted.map(e => e[1]), backgroundColor: '#1B6E3C' }] },
                     options: { ...getChartOpts(), indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { title: ctx => { const idx = ctx[0].dataIndex; return sorted[idx][0]; } } } } }
                 });
             }
@@ -946,7 +933,7 @@ def get_js(v):
                     destroyChart('chartDisabilitas');
                     chartObjs['chartDisabilitas'] = new Chart(document.getElementById('chartDisabilitas'), {
                         type: 'bar',
-                        data: { labels: filteredDisab.map(e => e[0]), datasets: [{ label: 'Jumlah', data: filteredDisab.map(e => e[1]), backgroundColor: '#b85c4d' }] },
+                        data: { labels: filteredDisab.map(e => e[0]), datasets: [{ label: 'Jumlah', data: filteredDisab.map(e => e[1]), backgroundColor: '#3B9FD4' }] },
                         options: getChartOpts()
                     });
                 }
@@ -1074,41 +1061,61 @@ def get_js(v):
         window.closePhotoPopup = closePhotoPopup;
 
         function fetchVillagePopup() {
-            const popupUrl = `https://docs.google.com/spreadsheets/d/${POPUP_SPREADSHEET_ID}/export?format=csv`;
+            const popupUrl = `https://buton-utara.net/api/data.php?type=popup`;
             const hardcodeId = '1gPDFURYAZTCWGWZxz5pPUwkdI5quy0G9';
             const hardcodeLink = 'https://drive.google.com/file/d/1gPDFURYAZTCWGWZxz5pPUwkdI5quy0G9/view?usp=sharing';
+            const villageDir = "''' + v['dir'].lower() + '''";
+            let resolved = false;
 
-            function triggerPopup(fileId, driveLink) {
+            function triggerPopup(fileId, driveLink, source) {
+                if (resolved) return;
+                resolved = true;
+                console.log(`[Popup] ${source} \u2014 file: ${fileId}`);
                 setTimeout(() => {
                     document.getElementById('photoPopupIframe').src = `https://drive.google.com/file/d/${fileId}/preview`;
                     const linkEl = document.getElementById('photoPopupLink');
                     if (linkEl) linkEl.href = driveLink;
                     document.getElementById('photoPopupOverlay').classList.add('active');
                     document.body.style.overflow = 'hidden';
-                }, 500); // deteksi otomatis
+                }, 500);
             }
+
+            // Timeout: if spreadsheet takes too long, use fallback
+            const popupTimeout = setTimeout(() => {
+                triggerPopup(hardcodeId, hardcodeLink, 'Timeout fallback');
+            }, 8000);
 
             Papa.parse(popupUrl, {
                 download: true,
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
-                    if (results.data && results.data.length > 0) {
-                        const villageDir = "''' + v['dir'].lower() + '''";
-                        const row = results.data.find(r => r.nama && (r.nama.toLowerCase().includes(villageDir) || villageDir.includes(r.nama.toLowerCase())));
-                        if (row && row.link) {
-                            // Extract ID from link like https://drive.google.com/file/d/1gPDFURYAZTCWG.../view
-                            const fileIdMatch = row.link.match(/\\/d\\/([a-zA-Z0-9_-]+)/);
-                            const fileId = fileIdMatch ? fileIdMatch[1] : row.link;
-                            triggerPopup(fileId, row.link);
+                    clearTimeout(popupTimeout);
+                    try {
+                        const rows = (results.data || []).filter(r => r.nama && r.link);
+                        const row = rows.find(r => {
+                            const n = r.nama.trim().toLowerCase();
+                            return n.includes(villageDir) || villageDir.includes(n);
+                        });
+                        if (row) {
+                            const m = row.link.match(/\\/d\\/([a-zA-Z0-9_-]+)/);
+                            if (m && m[1]) {
+                                triggerPopup(m[1], row.link, 'Spreadsheet OK');
+                            } else {
+                                triggerPopup(hardcodeId, hardcodeLink, 'Invalid link format');
+                            }
                         } else {
-                            triggerPopup(hardcodeId, hardcodeLink);
+                            triggerPopup(hardcodeId, hardcodeLink, 'No row for ' + villageDir);
                         }
-                    } else {
-                        triggerPopup(hardcodeId, hardcodeLink);
+                    } catch (e) {
+                        console.error('[Popup] Parse error:', e);
+                        triggerPopup(hardcodeId, hardcodeLink, 'Parse error');
                     }
                 },
-                error: function() {
-                    triggerPopup(hardcodeId, hardcodeLink);
+                error: function(err) {
+                    clearTimeout(popupTimeout);
+                    console.warn('[Popup] Fetch error:', err);
+                    triggerPopup(hardcodeId, hardcodeLink, 'Fetch error');
                 }
             });
         }
