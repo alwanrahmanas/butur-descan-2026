@@ -1,0 +1,31 @@
+# Protect sensitive files from direct access
+<FilesMatch "^(config\.php|\.rate_limits\.json|\.ai_cache\.json|\.env\.example)$">
+    Require all denied
+</FilesMatch>
+
+# Block directory listing
+Options -Indexes
+
+# Blokir akses langsung ke file PHP selain ai-insight.php
+<FilesMatch "^(?!ai-insight\.php$).+\.php$">
+    Require all denied
+</FilesMatch>
+
+# Set API key via environment variable (isi di hosting cPanel: SetEnv)
+# Atau set langsung di sini (PASTIKAN .htaccess tidak dapat diakses publik):
+SetEnv OPENAI_API_KEY "YOUR_OPENAI_API_KEY_HERE"
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Rate limit: Batasi request body size (2MB max)
+<IfModule mod_php.c>
+    php_value post_max_size 2M
+    php_value upload_max_filesize 0
+    php_flag file_uploads off
+</IfModule>
