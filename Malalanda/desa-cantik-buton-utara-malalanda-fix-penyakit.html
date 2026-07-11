@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Cantik Buton Utara - Desa Malalanda</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --color-bg: #f4f7f6;
+            --color-surface: #ffffff;
+            --color-surface-2: #f1f6f3;
+            --color-border: #d7e2db;
+            --color-text: #193126;
+            --color-text-muted: #5f7569;
+            --color-primary: #176a4d;
+            --color-primary-hover: #11513b;
+            --color-primary-highlight: rgba(23, 106, 77, 0.05);
+            --color-accent: #126e9f;
+            --color-warning: #c7781f;
+            --color-warning-bg: rgba(199, 120, 31, 0.12);
+            --color-success: #1e9e57;
+            --color-error: #cc3a3a;
+            
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.5rem;
+            --shadow-sm: 0 1px 2px rgba(15, 38, 26, 0.06);
+            --shadow-md: 0 8px 24px rgba(15, 38, 26, 0.08);
+            --shadow-lg: 0 18px 48px rgba(15, 38, 26, 0.12);
+            --container-max: 1200px;
+        }
+
+        .dark {
+            --color-bg: #111413;
+            --color-surface: #18201c;
+            --color-surface-2: #1e2823;
+            --color-border: #283830;
+            --color-text: #e1e6e3;
+            --color-text-muted: #94a39b;
+            --color-primary: #2ab887;
+            --color-primary-hover: #36d29d;
+            --color-primary-highlight: rgba(42, 184, 135, 0.1);
+            --color-accent: #3ea5d8;
+            --color-warning: #e39d48;
+            --color-warning-bg: rgba(227, 157, 72, 0.15);
+            --color-success: #2ab86f;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        /* Resets & Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, rgba(255,255,255,0.64) 0, rgba(255,255,255,0) 280px), var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6; font-size: 16px; transition: background-color 0.3s, color 0.3s;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; line-height: 1.3; color: var(--color-text); }
+        a { color: var(--color-primary); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--color-primary-hover); }
+        img { max-width: 100%; height: auto; display: block; }
+        ul { list-style: none; }
+        button, select, input { font-family: inherit; }
+        
+        .container { max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem; }
+        .section { padding: 4rem 0; }
+        .section-kicker { color: var(--color-primary); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
+        .section-title { font-size: 2rem; margin-bottom: 1rem; text-align: center; letter-spacing: 0; }
+        .section-desc { text-align: center; color: var(--color-text-muted); max-width: 700px; margin: 0 auto 3rem auto; }
+
+        .text-muted { color: var(--color-text-muted); }
+        .text-sm { font-size: 0.875rem; }
+        .font-bold { font-weight: 700; }
+        .font-medium { font-weight: 500; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; cursor: pointer;
+            transition: all 0.2s; border: none; text-align: center;
+        }
+        .btn i { width: 18px; height: 18px; flex: 0 0 auto; }
+        .btn:focus-visible, .tab-btn:focus-visible, select:focus-visible, input:focus-visible, .theme-toggle:focus-visible, .menu-toggle:focus-visible { outline: 3px solid rgba(31, 143, 200, 0.35); outline-offset: 2px; }
+        .btn-primary { background-color: var(--color-primary); color: #fff; }
+        .btn-primary:hover { background-color: var(--color-primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); color: #fff; }
+        .btn-secondary { background-color: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); }
+        .btn-secondary:hover { background-color: var(--color-surface-2); color: var(--color-text); }
+
+        /* Header / Nav */
+        header { position: sticky; top: 0; z-index: 100; background-color: var(--color-surface); background-color: color-mix(in srgb, var(--color-surface) 92%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-sm); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--color-primary); }
+        .badge-warning { background-color: var(--color-warning-bg); color: var(--color-warning); padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; border: 1px solid var(--color-warning); }
+        
+        .nav-links { display: flex; gap: 0.35rem; align-items: center; }
+        .nav-links a { color: var(--color-text-muted); font-weight: 600; padding: 0.55rem 0.8rem; border-radius: var(--radius-md); font-size: 0.92rem; }
+        .nav-links a:hover { color: var(--color-primary); background: var(--color-primary-highlight); }
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .theme-toggle { background: transparent; border: none; color: var(--color-text-muted); cursor: pointer; padding: 0.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .menu-toggle { display: none; background: transparent; border: none; color: var(--color-text); cursor: pointer; padding: 0.5rem; }
+
+        /* Banner */
+        .banner-warning { background-color: var(--color-warning-bg); border: 1px solid var(--color-warning); color: var(--color-warning); padding: 1rem; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-size: 0.9rem; border-radius: var(--radius-md); margin-bottom: 2rem;}
+
+        /* Hero */
+        .hero { position: relative; padding: 5.5rem 0 4rem; background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 100%); border-bottom: 1px solid var(--color-border); }
+        .hero-content { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr); gap: 2.25rem; align-items: center; }
+        .hero-copy { text-align: left; }
+        .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-primary); background: var(--color-primary-highlight); border: 1px solid var(--color-border); border-radius: 999px; padding: 0.45rem 0.75rem; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 1.25rem; }
+        .hero h1 { font-size: clamp(2.35rem, 5vw, 4rem); margin-bottom: 1.25rem; line-height: 1.05; letter-spacing: 0; }
+        .hero p { font-size: 1.08rem; color: var(--color-text-muted); margin-bottom: 2rem; max-width: 680px; }
+        .hero-cta { display: flex; gap: 1rem; justify-content: flex-start; flex-wrap: wrap; }
+        .hero-panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 1.25rem; }
+        .hero-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+        .hero-panel-title { font-size: 1rem; margin: 0; }
+        .hero-panel-chip { display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 999px; background: rgba(30, 158, 87, 0.1); color: var(--color-success); padding: 0.3rem 0.55rem; font-size: 0.75rem; font-weight: 800; white-space: nowrap; }
+        .metric-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .metric-tile { background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem; min-height: 104px; display: flex; flex-direction: column; justify-content: space-between; }
+        .metric-tile span { color: var(--color-text-muted); font-size: 0.78rem; font-weight: 700; }
+        .metric-tile strong { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.75rem; line-height: 1; color: var(--color-text); }
+        .hero-note { display: flex; align-items: flex-start; gap: 0.65rem; color: var(--color-text-muted); font-size: 0.85rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-border); }
+        .hero-note i { color: var(--color-accent); width: 18px; height: 18px; flex: 0 0 auto; margin-top: 0.12rem; }
+        
+        .lokus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .lokus-card { background-color: var(--color-surface); border-radius: var(--radius-lg); padding: 1.25rem; border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); text-align: left; transition: transform 0.2s, box-shadow 0.2s; }
+        .lokus-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .lokus-card h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 1.25rem; }
+        .lokus-stats-list { display: flex; flex-direction: column; gap: 0.5rem; color: var(--color-text-muted); font-size: 0.875rem; }
+        .lokus-stats-list div { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--color-border); padding-bottom: 0.25rem; }
+
+        /* Profil Tabs */
+        .tabs { display: flex; gap: 0.4rem; border: 1px solid var(--color-border); background: var(--color-surface-2); border-radius: var(--radius-lg); padding: 0.35rem; margin: 0 auto 2rem; overflow-x: auto; scrollbar-width: none; max-width: max-content; }
+        .tab-btn { padding: 0.7rem 1rem; background: transparent; border: none; border-radius: var(--radius-md); color: var(--color-text-muted); font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .tab-btn.active { color: var(--color-text); background: var(--color-surface); box-shadow: var(--shadow-sm); }
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+
+        /* Dashboard Filters */
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .filter-group { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .filter-bar { background: var(--color-surface); padding: 1.25rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); }
+        select, input[type="text"] { padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); background-color: var(--color-surface); color: var(--color-text); outline: none; min-height: 44px; }
+        select:focus, input:focus { border-color: var(--color-primary); }
+
+        /* KPI Cards */
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--color-surface); border-radius: var(--radius-lg); padding: 1.25rem; border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); min-height: 128px; display: flex; flex-direction: column; justify-content: space-between; }
+        .kpi-card-header { display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .kpi-value { font-size: 1.75rem; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--color-text); margin-bottom: 0.25rem; }
+        .kpi-sub { font-size: 0.75rem; color: var(--color-text-muted); }
+
+        /* Charts */
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .chart-card { background-color: var(--color-surface); border-radius: var(--radius-lg); padding: 1.25rem; border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); }
+        .chart-title { font-size: 1rem; margin-bottom: 1rem; font-weight: 600; }
+        .chart-container { position: relative; height: 300px; width: 100%; }
+        .chart-full { grid-column: 1 / -1; }
+
+        /* Tables */
+        .table-container { background-color: var(--color-surface); border-radius: var(--radius-lg); border: 1px solid var(--color-border); overflow-x: auto; margin-bottom: 2rem; box-shadow: var(--shadow-sm); }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; text-align: left; }
+        th, td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--color-border); font-size: 0.875rem; }
+        th { background-color: var(--color-surface-2); font-weight: 800; color: var(--color-text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        tr:hover { background-color: var(--color-primary-highlight); cursor: pointer; }
+        .status-badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background-color: var(--color-surface-2); }
+        .status-good { background-color: rgba(30, 158, 87, 0.1); color: var(--color-success); }
+        .status-warn { background-color: rgba(199, 120, 31, 0.1); color: var(--color-warning); }
+
+        /* Download Section */
+        .download-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .download-card { background-color: var(--color-surface); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: stretch; }
+        .download-card i { color: var(--color-primary); margin: 0 auto 1rem auto; width: 48px; height: 48px; }
+
+        /* Footer */
+        footer { background-color: var(--color-surface); border-top: 1px solid var(--color-border); padding: 4rem 0 2rem 0; margin-top: 4rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-col h4 { margin-bottom: 1rem; color: var(--color-text); }
+        .footer-col p, .footer-col a { color: var(--color-text-muted); font-size: 0.875rem; margin-bottom: 0.5rem; display: block; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.875rem; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .section { padding: 3.5rem 0; }
+            .nav-links { display: none; flex-direction: column; align-items: stretch; position: absolute; top: 72px; left: 0; right: 0; background: var(--color-surface); padding: 0.75rem 1rem 1rem; border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-md); }
+            .nav-links.active { display: flex; }
+            .nav-links a { width: 100%; }
+            .menu-toggle { display: block; }
+            .hero { padding: 3.5rem 0 3rem; }
+            .hero-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.35rem; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .chart-full { grid-column: 1; }
+            .tabs { max-width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .hero-cta, .filter-group { flex-direction: column; align-items: stretch; }
+            .hero-cta .btn { width: 100%; }
+            .metric-strip, .kpi-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 100 100" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="20" fill="currentColor" fill-opacity="0.1"/>
+                    <path d="M50 20L20 45V80H40V60H60V80H80V45L50 20Z" fill="currentColor"/>
+                    <circle cx="50" cy="45" r="8" fill="var(--color-surface)"/>
+                </svg>
+                Desa Cantik
+                <span class="badge-warning">PROTOTYPE</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#beranda">Beranda</a>
+                <a href="#profil">Profil Lokus</a>
+                <a href="#dashboard-keluarga">Keluarga</a>
+                <a href="#dashboard-individu">Individu</a>
+                <a href="#unduh-data">Unduh Data</a>
+                <a href="#tentang-data">Tentang</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode"><i data-lucide="moon" id="themeIcon"></i></button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Beranda -->
+        <section id="beranda" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-copy">
+                        <div class="hero-eyebrow"><i data-lucide="users-round"></i> Dashboard Keluarga & Individu</div>
+                        <h1>Desa Cantik Desa Malalanda</h1>
+                        <p>Prototype dashboard statistik berbasis <strong>Keluarga dan Individu</strong> khusus untuk Desa Malalanda.</p>
+                        <div class="hero-cta">
+                            <a href="#dashboard-keluarga" class="btn btn-primary"><i data-lucide="layout-dashboard"></i> Dashboard Keluarga</a>
+                            <a href="#dashboard-individu" class="btn btn-secondary"><i data-lucide="users"></i> Data Individu</a>
+                        </div>
+                    </div>
+                    <aside class="hero-panel" aria-label="Ringkasan data keluarga dan individu">
+                        <div class="hero-panel-header">
+                            <h2 class="hero-panel-title">Ringkasan Dataset</h2>
+                            <span class="hero-panel-chip"><i data-lucide="sparkles"></i> Simulasi</span>
+                        </div>
+                        <div class="metric-strip">
+                            <div class="metric-tile"><span>Lokus program</span><strong>1</strong></div>
+                            <div class="metric-tile"><span>Keluarga</span><strong>30</strong></div>
+                            <div class="metric-tile"><span>Individu</span><strong>90+</strong></div>
+                            <div class="metric-tile"><span>Tahun data</span><strong>2026</strong></div>
+                        </div>
+                        <div class="hero-note">
+                            <i data-lucide="search"></i>
+                            <span>Dashboard ini menampilkan data khusus Desa Malalanda. Pencarian bekerja untuk tabel keluarga dan individu.</span>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="banner-warning">
+                    <i data-lucide="alert-triangle"></i>
+                    Data yang ditampilkan adalah data simulasi untuk prototype. Struktur sesuai kuesioner final, nilai belum hasil pendataan lapangan.
+                </div>
+
+                <div class="lokus-grid" id="berandaLokusGrid">
+                    <!-- Cards Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Profil Lokus -->
+        <section id="profil" class="section">
+            <div class="container">
+                <h2 class="section-title">Profil Lokus Program</h2>
+                <p class="section-desc">Karakteristik demografi dan permukiman Desa Malalanda.</p>
+                
+                <div class="tabs" id="profilTabs">
+                    <button class="tab-btn active" data-target="profil-malalanda">Desa Malalanda</button>
+                </div>
+
+                <div id="profilContentContainer">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Filters for Dashboards -->
+        <div class="container" style="padding-top: 2rem;">
+            <div class="dashboard-header filter-bar">
+                <div>
+                    <h3 style="margin-bottom: 0.5rem;"><i data-lucide="filter" style="display:inline; width:20px; vertical-align:text-bottom;"></i> Filter Dashboard Global</h3>
+                    <p class="text-sm text-muted">Dashboard dikunci untuk Desa Malalanda. Hanya data agregat yang ditampilkan.</p>
+                </div>
+                <div class="filter-group">
+                    <select id="filter-wilayah" disabled title="Dashboard ini dikunci untuk Desa Malalanda">
+                        <option value="Desa Malalanda" selected>Desa Malalanda</option>
+                    </select>
+                    <input type="text" id="filter-search" placeholder="Cari nama responden...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Keluarga -->
+        <section id="dashboard-keluarga" class="section" style="padding-top: 2rem;">
+            <div class="container">
+                <h2 class="section-title" style="text-align: left;">Dashboard Keluarga</h2>
+                
+                <!-- KPI -->
+                <div class="kpi-grid" id="kpiKeluarga"></div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Status Tempat Tinggal</h3>
+                        <div class="chart-container"><canvas id="chartTinggal"></canvas></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Penerima Program Bantuan</h3>
+                        <div class="chart-container"><canvas id="chartBantuan"></canvas></div>
+                    </div>
+                    <div class="chart-card chart-full">
+                        <h3 class="chart-title">Sumber Energi Memasak per Lokus</h3>
+                        <div class="chart-container" style="height: 250px;"><canvas id="chartEnergi"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table id="tableKeluarga">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Wilayah</th>
+                                <th>Anggota</th>
+                                <th>Status Rumah</th>
+                                <th>Atap</th>
+                                <th>Energi Memasak</th>
+                                <th>Air Minum</th>
+                                <th>PKH</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Individu -->
+        <section id="dashboard-individu" class="section" style="background-color: var(--color-surface-2);">
+            <div class="container">
+                <h2 class="section-title" style="text-align: left;">Dashboard Individu (Anggota Keluarga)</h2>
+                
+                <!-- KPI -->
+                <div class="kpi-grid" id="kpiIndividu"></div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Pendidikan Tertinggi</h3>
+                        <div class="chart-container"><canvas id="chartPendidikan"></canvas></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Kondisi Pekerjaan</h3>
+                        <div class="chart-container"><canvas id="chartPekerjaan"></canvas></div>
+                    </div>
+                    <div class="chart-card chart-full">
+                        <h3 class="chart-title">Kasus Penyakit (Setahun Terakhir)</h3>
+                        <div class="chart-container" style="height: 250px;"><canvas id="chartPenyakit"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table id="tableIndividu">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Wilayah</th>
+                                <th>L/P</th>
+                                <th>Umur</th>
+                                <th>Pendidikan</th>
+                                <th>Pekerjaan</th>
+                                <th>Jamkes</th>
+                                <th>Jamsostek</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unduh Data Agregat -->
+        <section id="unduh-data" class="section">
+            <div class="container">
+                <h2 class="section-title">Unduh Data Agregat</h2>
+                <p class="section-desc">Unduh data yang ditampilkan di dashboard dalam format Excel. <strong>Tidak mengandung identitas personal</strong> (NIK, KK, nama, alamat, No. HP).</p>
+                
+                <div class="download-grid">
+                    <div class="download-card">
+                        <i data-lucide="home"></i>
+                        <h3>Tabel Keluarga</h3>
+                        <p class="text-muted text-sm" style="margin-bottom: 1.5rem;">Wilayah, anggota, status rumah, atap, energi, air minum, PKH</p>
+                        <button class="btn btn-secondary" style="width:100%" onclick="exportAgregat('keluarga')">Unduh Tabel Keluarga</button>
+                    </div>
+                    <div class="download-card">
+                        <i data-lucide="users"></i>
+                        <h3>Tabel Individu</h3>
+                        <p class="text-muted text-sm" style="margin-bottom: 1.5rem;">Wilayah, jenis kelamin, umur, pendidikan, pekerjaan, jamkes</p>
+                        <button class="btn btn-secondary" style="width:100%" onclick="exportAgregat('individu')">Unduh Tabel Individu</button>
+                    </div>
+                    <div class="download-card">
+                        <i data-lucide="folder-archive"></i>
+                        <h3>Gabungan</h3>
+                        <p class="text-muted text-sm" style="margin-bottom: 1.5rem;">Kedua tabel di atas dalam satu workbook Excel</p>
+                        <button class="btn btn-primary" style="width:100%" onclick="exportAgregat('gabungan')">Unduh Gabungan (.xlsx)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tentang Data -->
+        <section id="tentang-data" class="section" style="background-color: var(--color-surface-2);">
+            <div class="container" style="max-width: 800px;">
+                <h2 class="section-title">Tentang Prototype Data</h2>
+                <div style="background: var(--color-surface); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                    <p style="margin-bottom: 1rem;">Website ini merupakan prototype dashboard untuk program <strong>Desa Cantik (Cinta Statistik)</strong> Kabupaten Buton Utara, yang dibangun sesuai instrumen <strong>SDGSDES.26 — Kuesioner Profil Keluarga</strong>.</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <li><strong>Sumber Struktur:</strong> Kuesioner Profil Keluarga SDGSDES.26 (Revisi 2026).</li>
+                        <li><strong>Unit Observasi Utama:</strong> Keluarga/Rumah Tangga.</li>
+                        <li><strong>Entitas Turunan:</strong> Individu (terhubung melalui Nomor KK).</li>
+                        <li><strong>Blok Variabel:</strong> Keterangan Tempat, Kependudukan & Ketenagakerjaan, Perumahan & Lingkungan, Pendidikan & Kesehatan, Sosial Budaya, Perlindungan Sosial.</li>
+                        <li><strong>Program Bantuan:</strong> BLT Desa, PKH, BPJS PBI, Bantuan Pangan (Bapanas), BNPT/Sembako, PIP, MBG.</li>
+                        <li><strong>Status Data:</strong> Simulasi (Dummy Data) untuk demonstrasi arsitektur sistem.</li>
+                        <li><strong>Integrasi Data:</strong> Terhubung secara real-time dengan Google Sheets.</li>
+                    </ul>
+                    <div class="banner-warning" style="margin: 0;">
+                        Seluruh nama, NIK, dan Nomor KK yang ditampilkan di sistem ini adalah hasil generator acak (fiktif) semata.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="kontak">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <svg viewBox="0 0 100 100" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100" height="100" rx="20" fill="currentColor" fill-opacity="0.1"/>
+                            <path d="M50 20L20 45V80H40V60H60V80H80V45L50 20Z" fill="currentColor"/>
+                            <circle cx="50" cy="45" r="8" fill="var(--color-surface)"/>
+                        </svg>
+                        Desa Cantik
+                    </div>
+                    <p>Program Pembinaan Statistik Desa Kabupaten Buton Utara.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Kontak (Dummy)</h4>
+                    <p><i data-lucide="map-pin" style="width:16px;height:16px;display:inline-block;vertical-align:text-bottom;"></i> Jl. Statistik No. 1, Buton Utara</p>
+                    <p><i data-lucide="mail" style="width:16px;height:16px;display:inline-block;vertical-align:text-bottom;"></i> bps7405@bps.go.id</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Prototype Sistem - Bukan Versi Produksi © 2026 BPS Kabupaten Buton Utara. Hanya data agregat yang ditampilkan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logika JS & Data Generator -->
+    <script>
+        // --- 1. DATA & GOOGLE SHEETS INTEGRASI (SDGSDES.26) ---
+        let dataKeluarga = [];
+        let dataIndividu = [];
+        
+        // KONFIGURASI GOOGLE SHEETS
+// Sheet Keluarga: gid=629673429
+// Sheet Individu: gid=724909623
+        // Cukup masukkan ID Spreadsheet (dari URL) dan GID (ID Sheet) masing-masing
+        const SPREADSHEET_ID = "1ciK-2G3mGooMNBLIPCCrQS1yniQoNbWg"; // Contoh: "1abcDEFghi..."
+        const GID_KELUARGA = "629673429"; // GID untuk sheet Keluarga (biasanya 0 untuk sheet pertama)
+        const GID_INDIVIDU = "724909623"; // GID untuk sheet Individu 
+
+        const lokusList = ["Desa Malalanda"];
+        const LOCKED_LOKUS = "Desa Malalanda";
+
+        const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+        const rBool = (p=0.5) => Math.random() < p;
+
+        function generateDummyData() {
+            let klgC = 1, indC = 1;
+            const atapOpts = ["Beton","Genteng","Seng","Kayu/Sirap","Asbes"];
+            const dindingOpts = ["Tembok","Kayu/papan/batang kayu","Bambu/Anyaman bambu"];
+            const lantaiOpts = ["Keramik/Ubin/Tegel/Teraso","Semen/Bata Merah","Kayu/Papan","Bambu/Tanah"];
+            const babOpts = ["Ada, digunakan keluarga sendiri","Ada, digunakan bersama","Ada, MCK komunal","Tidak ada fasilitas"];
+            const klosetOpts = ["Leher Angsa","Plengsengan dengan tutup","Cemplung/Cubluk"];
+            const tinjaOpts = ["Tangki Septik","IPAL","Lubang Tanah","Kolam/Sungai/Laut"];
+            const energiOpts = ["Elpiji 3 kg","Elpiji 5,5 kg","Elpiji 12 kg","Kayu bakar","Arang","Minyak tanah"];
+            const peneranganOpts = ["Listrik PLN dengan meteran","Listrik PLN tanpa meteran","Listrik Non PLN","Bukan Listrik"];
+            const sampahOpts = ["Diangkut rutin","Lubang/dibakar","Sungai/saluran","Drainase","Lainnya"];
+            const airMinumOpts = ["Air kemasan bermerek","Air isi ulang","Ledeng meteran (PAM)","Sumur bor/pompa","Sumur","Mata air","Sungai/danau"];
+            const airMandiOpts = ["Ledeng meteran (PAM)","Sumur bor/pompa","Sumur","Mata air","Sungai/danau"];
+            const kepemilikanOpts = ["SHM atas nama ART","SHM bukan atas nama ART","Surat Bukti Lainnya","Tidak punya"];
+
+            lokusList.forEach((lokus, li) => {
+                const isM = li===0, isL = li===1, isK = li===2;
+                for(let i=0; i<10; i++) {
+                    const kk = `74080${li}000000${String(i).padStart(2,'0')}`;
+                    const nikK = `74080${li}100000${String(i).padStart(2,'0')}`;
+                    const numMem = 3 + Math.floor(Math.random()*3);
+                    const numLansia = rBool(0.2) ? 1 : 0;
+
+                    dataKeluarga.push({
+                        id_keluarga: `KLG-${li}-${i}`,
+                        desa_kelurahan: lokus,
+                        status_wilayah: isK ? "Kelurahan" : "Desa",
+                        sls: `SLS ${String(i%3+1).padStart(3,'0')}`,
+                        nama_responden: `Kepala Keluarga ${klgC}`,
+                        alamat: `Jl. Contoh ${klgC}`,
+                        no_hp: `0812XXXXX${String(klgC).padStart(2,'0')}`,
+                        nomor_kk: kk,
+                        nama_kepala_keluarga: `Kepala Keluarga ${klgC}`,
+                        nik_kepala_keluarga: nikK,
+                        jumlah_art: numMem,
+                        jumlah_lansia: numLansia,
+                        pekerja_migran_lk: rBool(0.05) ? 1 : 0,
+                        pekerja_migran_pr: rBool(0.03) ? 1 : 0,
+                        tahun_data: 2026,
+                        // V. Perumahan
+                        tempat_tinggal: isM ? "Milik Sendiri" : pick(["Milik Sendiri","Milik Sendiri","Kontrak/Sewa","Bebas Sewa"]),
+                        bukti_kepemilikan: isM ? pick(kepemilikanOpts.slice(0,2)) : pick(kepemilikanOpts),
+                        luas_lantai_m2: 36 + Math.floor(Math.random()*80),
+                        luas_lahan_m2: 60 + Math.floor(Math.random()*150),
+                        jenis_atap: isK ? "Genteng" : pick(atapOpts),
+                        jenis_dinding: isK ? "Tembok" : pick(dindingOpts),
+                        jenis_lantai: isK ? pick(lantaiOpts.slice(0,1)) : pick(lantaiOpts),
+                        fasilitas_bab: isK ? "Ada, digunakan keluarga sendiri" : pick(babOpts),
+                        jenis_kloset: pick(klosetOpts),
+                        pembuangan_tinja: isK ? "Tangki Septik" : pick(tinjaOpts),
+                        energi_memasak: isM ? pick(["Elpiji 3 kg","Kayu bakar","Arang"]) : (isK ? pick(["Elpiji 12 kg","Elpiji 3 kg"]) : pick(energiOpts)),
+                        penerangan_rumah: isK ? "Listrik PLN dengan meteran" : (isL && rBool(0.15) ? "Bukan Listrik" : pick(peneranganOpts.slice(0,2))),
+                        tempat_buang_sampah: isK ? "Diangkut rutin" : pick(sampahOpts),
+                        sumber_air_minum: isK ? pick(airMinumOpts.slice(0,3)) : pick(airMinumOpts),
+                        sumber_air_mandi: isK ? pick(airMandiOpts.slice(0,2)) : pick(airMandiOpts),
+                        // VII. Sosial Budaya
+                        agama_mayoritas: "Islam",
+                        jumlah_disabilitas: rBool(0.1) ? 1 : 0,
+                        // VIII. Perlindungan Sosial
+                        penerima_blt_desa: !isK && rBool(0.35),
+                        penerima_pkh: rBool(0.4),
+                        penerima_bpjs_pbi: rBool(isK ? 0.7 : 0.4),
+                        penerima_bantuan_pangan: isL ? rBool(0.5) : rBool(0.25),
+                        penerima_bnpt_sembako: rBool(0.2),
+                        penerima_pip: rBool(0.35),
+                        penerima_mbg: rBool(0.3),
+                        art_tidak_lagi_menerima: rBool(0.15) ? 1 : 0
+                    });
+
+                    for(let j=0; j<numMem; j++) {
+                        const isHead=j===0, isWife=j===1, isChild=j>1;
+                        let umur = isHead ? 40+Math.floor(Math.random()*20) : isWife ? 35+Math.floor(Math.random()*15) : 5+Math.floor(Math.random()*20);
+                        let pekerjaan = "Tidak bekerja";
+                        if(isHead) pekerjaan = "Bekerja";
+                        else if(isWife) pekerjaan = rBool(0.3) ? "Bekerja" : "Ibu rumah tangga";
+                        else if(isChild && umur>=7 && umur<=18) pekerjaan = "Bersekolah";
+                        else if(isChild && umur>18) pekerjaan = rBool(0.5) ? "Bekerja" : "Mencari pekerjaan";
+                        let pend = "Belum sekolah";
+                        if(umur>18) pend = isK ? pick(["Perguruan Tinggi","SMA/MA sederajat"]) : pick(["SMA/MA sederajat","SMP/MTs sederajat","SD/MI sederajat"]);
+                        else if(pekerjaan==="Bersekolah") pend = "Sedang sekolah";
+
+                        dataIndividu.push({
+                            id_individu: `IND-${klgC}-${j}`,
+                            nomor_kk: kk, nik: `74080${li}100${String(i).padStart(2,'0')}${j}`,
+                            nama: isHead ? `Kepala Keluarga ${klgC}` : (isWife ? `Istri ${klgC}` : `Anak ${indC}`),
+                            jenis_kelamin: isHead ? "Laki-laki" : (isWife ? "Perempuan" : pick(["Laki-laki","Perempuan"])),
+                            umur, pendidikan_tertinggi: pend, kondisi_pekerjaan: pekerjaan,
+                            peserta_jaminan_kesehatan: isK ? true : rBool(0.65),
+                            peserta_jamsostek: pekerjaan==="Bekerja" && rBool(0.25),
+                            sakit_diare: rBool(0.08), sakit_dbd: rBool(0.04), sakit_diabetes: umur>40 && rBool(0.15),
+                            punya_disabilitas: rBool(0.04),
+                            desa_kelurahan: lokus
+                        });
+                        indC++;
+                    }
+                    klgC++;
+                }
+            });
+        }
+
+
+
+        function parseSheetRows(rawRows, requiredColumn) {
+            const headerIndex = rawRows.findIndex(row => row.includes(requiredColumn));
+            if (headerIndex === -1) {
+                console.warn(`Header ${requiredColumn} tidak ditemukan. Cek 3 baris teratas sheet.`);
+                return [];
+            }
+
+            const headers = rawRows[headerIndex].map(h => String(h || '').trim());
+            return rawRows.slice(headerIndex + 1)
+                .filter(row => row.some(cell => String(cell || '').trim() !== ''))
+                .map(row => {
+                    const obj = {};
+                    headers.forEach((header, idx) => {
+                        if (header) obj[header] = row[idx];
+                    });
+                    return obj;
+                });
+        }
+
+        function isYa(value) {
+            const text = String(value ?? '').trim().toLowerCase();
+            return text === 'ya' || text === 'yes' || text === 'true' || text === '1';
+        }
+
+        function normalizeBooleanFields(rows, fields) {
+            return rows.map(row => {
+                const normalized = { ...row };
+                fields.forEach(field => {
+                    normalized[field] = isYa(normalized[field]);
+                });
+                return normalized;
+            });
+        }
+
+        const BOOLEAN_FIELDS_KELUARGA = [
+            'penerima_blt_desa',
+            'penerima_pkh',
+            'penerima_bpjs_pbi',
+            'penerima_bantuan_pangan',
+            'penerima_bnpt_sembako',
+            'penerima_pip',
+            'penerima_mbg'
+        ];
+
+        const BOOLEAN_FIELDS_INDIVIDU = [
+            'peserta_jaminan_kesehatan',
+            'peserta_jamsostek',
+            'sakit_diare',
+            'sakit_dbd',
+            'sakit_diabetes',
+            'punya_disabilitas'
+        ];
+
+
+
+        async function loadData() {
+            if (!SPREADSHEET_ID) {
+                console.log("Spreadsheet ID kosong. Menggunakan dummy data lokal.");
+                generateDummyData();
+                renderBerandaLokus();
+                renderAll();
+                return;
+            }
+
+            const urlKeluarga = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${GID_KELUARGA}`;
+            const urlIndividu = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${GID_INDIVIDU}`;
+
+            try {
+                const resKeluarga = await new Promise((resolve, reject) => {
+                    Papa.parse(urlKeluarga, {
+                        download: true,
+                        header: false,
+                        dynamicTyping: false,
+                        skipEmptyLines: true,
+                        complete: resolve,
+                        error: reject
+                    });
+                });
+
+                const resIndividu = await new Promise((resolve, reject) => {
+                    Papa.parse(urlIndividu, {
+                        download: true,
+                        header: false,
+                        dynamicTyping: false,
+                        skipEmptyLines: true,
+                        complete: resolve,
+                        error: reject
+                    });
+                });
+
+                let keluargaRows = parseSheetRows(resKeluarga.data || [], 'id_keluarga');
+                let individuRows = parseSheetRows(resIndividu.data || [], 'id_individu');
+
+                keluargaRows = normalizeBooleanFields(keluargaRows, BOOLEAN_FIELDS_KELUARGA);
+                individuRows = normalizeBooleanFields(individuRows, BOOLEAN_FIELDS_INDIVIDU);
+
+                if (keluargaRows.length > 0 && individuRows.length > 0) {
+                    dataKeluarga = keluargaRows.map(row => ({ ...row, desa_kelurahan: row.desa_kelurahan || LOCKED_LOKUS }));
+                    dataIndividu = individuRows.map(row => ({ ...row, desa_kelurahan: row.desa_kelurahan || LOCKED_LOKUS }));
+
+                    console.log("Data berhasil diambil dari Google Sheets!");
+                    console.log("Preview penyakit:", {
+                        diare: dataIndividu.filter(i => i.sakit_diare).length,
+                        dbd: dataIndividu.filter(i => i.sakit_dbd).length,
+                        diabetes: dataIndividu.filter(i => i.sakit_diabetes).length
+                    });
+
+                    const banners = document.querySelectorAll('.banner-warning');
+                    banners.forEach(b => {
+                        b.innerHTML = '<i data-lucide="check-circle"></i> DATA LIVE — Terhubung secara real-time dengan Google Sheets.';
+                        b.style.backgroundColor = 'rgba(30, 158, 87, 0.12)';
+                        b.style.borderColor = 'var(--color-success)';
+                        b.style.color = 'var(--color-success)';
+                    });
+                } else {
+                    console.warn("Format kolom Google Sheets tidak sesuai. Menggunakan dummy data lokal.");
+                    generateDummyData();
+                }
+            } catch (error) {
+                console.error("Gagal menarik data CSV:", error);
+                alert("Gagal terhubung ke Google Sheets. Sistem menggunakan dummy data lokal.");
+                generateDummyData();
+            }
+
+            renderBerandaLokus();
+            renderAll();
+        }
+
+
+        // --- 2. GLOBAL STATE & FILTERING ---
+        let filterWilayah = 'Desa Malalanda';
+        let searchKeyword = '';
+
+        function getFilteredKeluarga() {
+            const hasWilayahColumn = dataKeluarga.some(item => item.desa_kelurahan);
+            return dataKeluarga.filter(item => {
+                const wilayah = String(item.desa_kelurahan || LOCKED_LOKUS).trim();
+                const matchWilayah = !hasWilayahColumn || wilayah === LOCKED_LOKUS;
+                const keyword = searchKeyword.toLowerCase();
+                const nama = String(item.nama_responden || item.nama_kepala_keluarga || '').toLowerCase();
+                const matchKeyword = !keyword || nama.includes(keyword);
+                return matchWilayah && matchKeyword;
+            });
+        }
+
+        function getFilteredIndividu() {
+            const keluargaAktif = getFilteredKeluarga();
+            const kkAktif = new Set(keluargaAktif.map(k => k.nomor_kk));
+            return dataIndividu.filter(ind => kkAktif.has(ind.nomor_kk));
+        }
+
+        // --- 3. RENDER FUNCTIONS ---
+        
+        function formatNumber(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+        function maskIdentifier(value, visibleStart = 4, visibleEnd = 4) {
+            const text = String(value || '');
+            if (text.length <= visibleStart + visibleEnd) return '*'.repeat(text.length);
+            return `${text.slice(0, visibleStart)}${'*'.repeat(text.length - visibleStart - visibleEnd)}${text.slice(-visibleEnd)}`;
+        }
+        function maskKK(value) { return maskIdentifier(value, 6, 4); }
+        function maskNIK(value) { return maskIdentifier(value, 6, 4); }
+        function getPublicKeluargaRows(rows) {
+            return rows.map(k => ({
+                ...k,
+                nomor_kk: maskKK(k.nomor_kk),
+                nik_kepala_keluarga: maskNIK(k.nik_kepala_keluarga)
+            }));
+        }
+        function getPublicIndividuRows(rows) {
+            return rows.map(i => ({
+                ...i,
+                nomor_kk: maskKK(i.nomor_kk),
+                nik: maskNIK(i.nik)
+            }));
+        }
+        function getStatusBadge(condition, goodValue) {
+            return condition === goodValue 
+                ? `<span class="status-badge status-good">${condition}</span>` 
+                : `<span class="status-badge status-warn">${condition}</span>`;
+        }
+
+        // Render Beranda & Profil
+        function renderBerandaLokus() {
+            const grid = document.getElementById('berandaLokusGrid');
+            const profilContainer = document.getElementById('profilContentContainer');
+            grid.innerHTML = '';
+            profilContainer.innerHTML = '';
+
+            lokusList.forEach((lokus, idx) => {
+                const klg = dataKeluarga.filter(k => k.desa_kelurahan === lokus);
+                const kks = new Set(klg.map(k=>k.nomor_kk));
+                const ind = dataIndividu.filter(i => kks.has(i.nomor_kk));
+                const rmhMilik = klg.filter(k => k.tempat_tinggal === "Milik Sendiri").length;
+                const jamkes = ind.filter(i => i.peserta_jaminan_kesehatan).length;
+                const bpjsPbi = klg.filter(k => k.penerima_bpjs_pbi).length;
+
+                grid.innerHTML += `
+                    <div class="lokus-card">
+                        <h3><i data-lucide="${idx===0?'trees':(idx===1?'waves':'building')}"></i> ${lokus}</h3>
+                        <div class="lokus-stats-list">
+                            <div><span>Jumlah Keluarga:</span> <strong>${klg.length}</strong></div>
+                            <div><span>Jumlah Individu:</span> <strong>${ind.length}</strong></div>
+                            <div><span>Rumah Milik Sendiri:</span> <strong>${Math.round((rmhMilik/klg.length)*100)}%</strong></div>
+                            <div><span>Cakupan Jamkes:</span> <strong>${Math.round((jamkes/(ind.length||1))*100)}%</strong></div>
+                            <div><span>BPJS PBI:</span> <strong>${Math.round((bpjsPbi/klg.length)*100)}%</strong></div>
+                        </div>
+                    </div>
+                `;
+
+                profilContainer.innerHTML += `
+                    <div class="tab-content ${idx===0?'active':''}" id="profil-malalanda">
+                        <div style="background: var(--color-surface); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+                            <div class="badge-warning" style="display:inline-block; margin-bottom:1rem;">${klg[0].status_wilayah}</div>
+                            <h3>${lokus}</h3>
+                            <p class="text-muted" style="margin-bottom: 2rem;">Simulasi profil demografi dan kelayakan permukiman untuk lokus percontohan ini menunjukkan gambaran kesejahteraan berdasarkan instrumen SDGs Desa Keluarga.</p>
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-card-header"><i data-lucide="home"></i> Keluarga</div>
+                                    <div class="kpi-value">${klg.length}</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-card-header"><i data-lucide="users"></i> Individu</div>
+                                    <div class="kpi-value">${ind.length}</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-card-header"><i data-lucide="shield-check"></i> Peserta Jamkes</div>
+                                    <div class="kpi-value">${Math.round((jamkes/ind.length)*100)}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        // Render Dashboard Keluarga
+        let chartTinggalObj, chartBantuanObj, chartEnergiObj;
+        function renderDashboardKeluarga() {
+            const dataKlg = getFilteredKeluarga();
+            const dataInd = getFilteredIndividu();
+            
+            // KPI
+            const n = dataKlg.length || 1;
+            const milik = dataKlg.filter(k=>k.tempat_tinggal === "Milik Sendiri").length;
+            const listrikPLN = dataKlg.filter(k=>String(k.penerangan_rumah||'').includes("PLN")).length;
+            const pkh = dataKlg.filter(k=>k.penerima_pkh).length;
+            const bpjsPbi = dataKlg.filter(k=>k.penerima_bpjs_pbi).length;
+            const jambanSendiri = dataKlg.filter(k=>String(k.fasilitas_bab||'').includes("keluarga sendiri")).length;
+            
+            document.getElementById('kpiKeluarga').innerHTML = `
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="home"></i> Total Keluarga</div><div class="kpi-value">${dataKlg.length}</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="users"></i> Total Individu</div><div class="kpi-value">${dataInd.length}</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="calculator"></i> Rata-rata ART</div><div class="kpi-value">${dataKlg.length ? (dataInd.length/dataKlg.length).toFixed(1) : 0}</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="key"></i> Milik Sendiri</div><div class="kpi-value">${Math.round((milik/n)*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="zap"></i> Listrik PLN</div><div class="kpi-value">${Math.round((listrikPLN/n)*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="droplets"></i> Jamban Sendiri</div><div class="kpi-value">${Math.round((jambanSendiri/n)*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="wallet"></i> PKH</div><div class="kpi-value">${Math.round((pkh/n)*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="shield-check"></i> BPJS PBI</div><div class="kpi-value">${Math.round((bpjsPbi/n)*100)}%</div></div>
+            `;
+
+            // Table
+            const tbody = document.querySelector('#tableKeluarga tbody');
+            tbody.innerHTML = '';
+            dataKlg.forEach((k, idx) => {
+                const jmlAnggota = dataInd.filter(i=>i.nomor_kk === k.nomor_kk).length;
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="font-medium">${idx+1}</td>
+                        <td>${k.desa_kelurahan}</td>
+                        <td>${jmlAnggota}</td>
+                        <td>${getStatusBadge(k.tempat_tinggal, "Milik Sendiri")}</td>
+                        <td>${k.jenis_atap||'-'}</td>
+                        <td>${k.energi_memasak||'-'}</td>
+                        <td>${k.sumber_air_minum||'-'}</td>
+                        <td>${getStatusBadge(k.penerima_pkh ? 'Ya' : 'Tidak', 'Ya')}</td>
+                    </tr>
+                `;
+            });
+
+            // Charts
+            const isDark = document.documentElement.classList.contains('dark');
+            const txtColor = isDark ? '#e1e6e3' : '#193126';
+            const opt = { responsive: true, maintainAspectRatio: false, color: txtColor, plugins:{legend:{labels:{color:txtColor}}} };
+
+            if(chartTinggalObj) chartTinggalObj.destroy();
+            const sTinggal = {};
+            dataKlg.forEach(k => { const v=k.tempat_tinggal||'Lainnya'; sTinggal[v]=(sTinggal[v]||0)+1; });
+            chartTinggalObj = new Chart(document.getElementById('chartTinggal'), {
+                type: 'doughnut', data: { labels: Object.keys(sTinggal), datasets: [{ data: Object.values(sTinggal), backgroundColor: ['#176a4d','#c7781f','#1f8fc8','#94a39b','#cc3a3a'], borderWidth:0 }] }, options: opt
+            });
+
+            if(chartBantuanObj) chartBantuanObj.destroy();
+            const programs = [
+                {key:'penerima_blt_desa', label:'BLT Desa'},
+                {key:'penerima_pkh', label:'PKH'},
+                {key:'penerima_bpjs_pbi', label:'BPJS PBI'},
+                {key:'penerima_bantuan_pangan', label:'Bantuan Pangan'},
+                {key:'penerima_bnpt_sembako', label:'BNPT/Sembako'},
+                {key:'penerima_pip', label:'PIP'},
+                {key:'penerima_mbg', label:'MBG'}
+            ];
+            chartBantuanObj = new Chart(document.getElementById('chartBantuan'), {
+                type: 'bar', data: { 
+                    labels: programs.map(p=>p.label), 
+                    datasets: [{ label: 'Jumlah Keluarga', data: programs.map(p=>dataKlg.filter(k=>k[p.key]).length), backgroundColor: '#1f8fc8' }] 
+                }, options: { ...opt, indexAxis: 'y' }
+            });
+
+            if(chartEnergiObj) chartEnergiObj.destroy();
+            const eKats = ["Elpiji","Kayu bakar","Arang","Minyak tanah","Lainnya"];
+            const energiByLokus = {};
+            lokusList.forEach(l => { energiByLokus[l] = {}; eKats.forEach(e => energiByLokus[l][e]=0); });
+            dataKlg.forEach(k => {
+                const l = k.desa_kelurahan; if(!energiByLokus[l]) return;
+                const e = k.energi_memasak||'';
+                if(e.includes('lpiji') || e.includes('Elpiji')) energiByLokus[l]["Elpiji"]++;
+                else if(e.includes('Kayu')) energiByLokus[l]["Kayu bakar"]++;
+                else if(e.includes('Arang')) energiByLokus[l]["Arang"]++;
+                else if(e.includes('Minyak')) energiByLokus[l]["Minyak tanah"]++;
+                else energiByLokus[l]["Lainnya"]++;
+            });
+            const eColors = ['#176a4d','#c7781f','#94a39b','#cc3a3a','#1f8fc8'];
+            chartEnergiObj = new Chart(document.getElementById('chartEnergi'), {
+                type: 'bar', data: { 
+                    labels: lokusList, 
+                    datasets: eKats.map((e,i) => ({ label: e, data: lokusList.map(l=>energiByLokus[l][e]), backgroundColor: eColors[i] }))
+                }, options: { ...opt, scales: { x: { stacked: true }, y: { stacked: true } } }
+            });
+
+            lucide.createIcons();
+        }
+
+        // Render Dashboard Individu
+        let chartPendObj, chartPekObj, chartPenObj;
+        function renderDashboardIndividu() {
+            const dataInd = getFilteredIndividu();
+            
+            // KPI
+            const lk = dataInd.filter(i=>i.jenis_kelamin === "Laki-laki").length;
+            const jamkes = dataInd.filter(i=>i.peserta_jaminan_kesehatan).length;
+            const jamsos = dataInd.filter(i=>i.peserta_jamsostek).length;
+            const sma = dataInd.filter(i=>String(i.pendidikan_tertinggi||'').includes("SMA") || String(i.pendidikan_tertinggi||'').includes("Perguruan Tinggi")).length;
+            
+            document.getElementById('kpiIndividu').innerHTML = `
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="users"></i> Total Individu</div><div class="kpi-value">${dataInd.length}</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="user"></i> Laki-laki</div><div class="kpi-value">${Math.round((lk/(dataInd.length||1))*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="shield-check"></i> Jaminan Kesehatan</div><div class="kpi-value">${Math.round((jamkes/(dataInd.length||1))*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="briefcase"></i> Jaminan Naker</div><div class="kpi-value">${Math.round((jamsos/(dataInd.length||1))*100)}%</div></div>
+                <div class="kpi-card"><div class="kpi-card-header"><i data-lucide="graduation-cap"></i> SMA Ke Atas</div><div class="kpi-value">${Math.round((sma/(dataInd.length||1))*100)}%</div></div>
+            `;
+
+            // Table
+            const tbody = document.querySelector('#tableIndividu tbody');
+            tbody.innerHTML = '';
+            dataInd.forEach((i, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="font-medium">${idx+1}</td>
+                        <td>${i.desa_kelurahan||'-'}</td>
+                        <td>${i.jenis_kelamin === 'Laki-laki' ? 'L' : 'P'}</td>
+                        <td>${i.umur}</td>
+                        <td>${i.pendidikan_tertinggi}</td>
+                        <td>${i.kondisi_pekerjaan}</td>
+                        <td>${getStatusBadge(i.peserta_jaminan_kesehatan ? 'Ya' : 'Tidak', 'Ya')}</td>
+                        <td>${getStatusBadge(i.peserta_jamsostek ? 'Ya' : 'Tidak', 'Ya')}</td>
+                    </tr>
+                `;
+            });
+
+            // Charts
+            const isDark = document.documentElement.classList.contains('dark');
+            const txtColor = isDark ? '#e1e6e3' : '#193126';
+            const opt = { responsive: true, maintainAspectRatio: false, color: txtColor, plugins:{legend:{labels:{color:txtColor}}} };
+
+            if(chartPendObj) chartPendObj.destroy();
+            const pends = {}; dataInd.forEach(i => { pends[i.pendidikan_tertinggi] = (pends[i.pendidikan_tertinggi]||0)+1; });
+            chartPendObj = new Chart(document.getElementById('chartPendidikan'), {
+                type: 'bar', data: { labels: Object.keys(pends), datasets: [{ label: 'Jumlah', data: Object.values(pends), backgroundColor: '#176a4d' }] }, options: opt
+            });
+
+            if(chartPekObj) chartPekObj.destroy();
+            const peks = {}; dataInd.forEach(i => { peks[i.kondisi_pekerjaan] = (peks[i.kondisi_pekerjaan]||0)+1; });
+            chartPekObj = new Chart(document.getElementById('chartPekerjaan'), {
+                type: 'pie', data: { labels: Object.keys(peks), datasets: [{ data: Object.values(peks), backgroundColor: ['#1f8fc8', '#1e9e57', '#c7781f', '#cc3a3a', '#94a39b'], borderWidth:0 }] }, options: opt
+            });
+
+            if(chartPenObj) chartPenObj.destroy();
+            const diare = dataInd.filter(i=>i.sakit_diare).length;
+            const dbd = dataInd.filter(i=>i.sakit_dbd).length;
+            const dm = dataInd.filter(i=>i.sakit_diabetes).length;
+            chartPenObj = new Chart(document.getElementById('chartPenyakit'), {
+                type: 'bar', data: { labels: ['Diare', 'DBD', 'Diabetes'], datasets: [{ label: 'Kasus Setahun Terakhir', data: [diare, dbd, dm], backgroundColor: '#cc3a3a' }] }, options: { ...opt, indexAxis: 'y' }
+            });
+
+            lucide.createIcons();
+        }
+
+        function renderAll() {
+            renderDashboardKeluarga();
+            renderDashboardIndividu();
+        }
+
+        // --- 4. EVENT LISTENERS ---
+        document.getElementById('filter-wilayah').addEventListener('change', (e) => { filterWilayah = e.target.value; renderAll(); });
+        document.getElementById('filter-search').addEventListener('input', (e) => { searchKeyword = e.target.value; renderAll(); });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            themeIcon.setAttribute('data-lucide', 'sun');
+        }
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            themeIcon.setAttribute('data-lucide', document.documentElement.classList.contains('dark') ? 'sun' : 'moon');
+            lucide.createIcons();
+            renderAll();
+        });
+
+        // Tabs
+        document.addEventListener('click', e => {
+            if(e.target.classList.contains('tab-btn')) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                e.target.classList.add('active');
+                document.getElementById(e.target.dataset.target).classList.add('active');
+            }
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+        navLinks.addEventListener('click', () => { if(window.innerWidth <= 768) navLinks.classList.remove('active'); });
+
+        // --- 5. EXPORT DATA AGREGAT (HANYA KOLOM YANG DITAMPILKAN DI WEB) ---
+        window.exportAgregat = function(type) {
+            const wb = XLSX.utils.book_new();
+            const note = [['Data agregat Desa Cantik Buton Utara — Tidak mengandung identitas personal (NIK/KK/Nama/Alamat/HP)'], []];
+
+            if(type === 'keluarga' || type === 'gabungan') {
+                const klg = getFilteredKeluarga();
+                const ind = getFilteredIndividu();
+                const head = ['No','Wilayah','Jumlah ART','Status Rumah','Jenis Atap','Energi Memasak','Air Minum','PKH'];
+                const rows = klg.map((k,i) => [
+                    i+1, k.desa_kelurahan, ind.filter(x=>x.nomor_kk===k.nomor_kk).length,
+                    k.tempat_tinggal, k.jenis_atap||'-', k.energi_memasak||'-',
+                    k.sumber_air_minum||'-', k.penerima_pkh ? 'Ya' : 'Tidak'
+                ]);
+                const ws = XLSX.utils.aoa_to_sheet([...note, head, ...rows]);
+                XLSX.utils.book_append_sheet(wb, ws, 'Tabel Keluarga');
+            }
+            if(type === 'individu' || type === 'gabungan') {
+                const ind = getFilteredIndividu();
+                const head = ['No','Wilayah','L/P','Umur','Pendidikan','Pekerjaan','Jamkes','Jamsostek'];
+                const rows = ind.map((x,i) => [
+                    i+1, x.desa_kelurahan||'-', x.jenis_kelamin==='Laki-laki'?'L':'P',
+                    x.umur, x.pendidikan_tertinggi, x.kondisi_pekerjaan,
+                    x.peserta_jaminan_kesehatan?'Ya':'Tidak', x.peserta_jamsostek?'Ya':'Tidak'
+                ]);
+                const ws = XLSX.utils.aoa_to_sheet([...note, head, ...rows]);
+                XLSX.utils.book_append_sheet(wb, ws, 'Tabel Individu');
+            }
+            XLSX.writeFile(wb, `Desa_Cantik_Agregat_${type.toUpperCase()}_2026.xlsx`);
+        };
+
+
+        // Initialize App
+        lucide.createIcons();
+        loadData();
+    </script>
+</body>
+</html>

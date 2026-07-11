@@ -1,0 +1,33 @@
+link spreadsheet data laangke petunjuk:
+https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?usp=sharing&ouid=108924017189271619620&rtpof=true&sd=true
+sheet: 
+Entri_Keluarga: https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?gid=1804314654#gid=1804314654
+403_Lapangan: https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?gid=1446044024#gid=1446044024
+601_Pendidikan_SLS: https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?gid=1505151008#gid=1505151008
+602_Kesehatan_SLS: https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?gid=2132676905#gid=2132676905
+701_Agama: https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?gid=87680082#gid=87680082
+702_Disabilitas: https://docs.google.com/spreadsheets/d/1FZZpyF6lG6cvPUu-i8gn9WcOMhExN_OG/edit?gid=1083717073#gid=1083717073
+
+link spreadsheet data lakonea: 
+https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?usp=sharing&ouid=108924017189271619620&rtpof=true&sd=true
+sheet:
+Entri_Keluarga_Lakonea: https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?gid=1124726980#gid=1124726980
+403_Lapangan: https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?gid=821191437#gid=821191437 
+601_Pendidikan_SLS: https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?gid=525501546#gid=525501546
+602_Kesehatan_SLS: https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?gid=161083327#gid=161083327
+701_Agama: https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?gid=114526696#gid=114526696
+702_Disabilitas: https://docs.google.com/spreadsheets/d/1jjnaeoxpSVPY3Rl1aMbFlkzsgDo832h8/edit?gid=1602534448#gid=1602534448
+
+link spreadsheet data malalanda: 
+https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?usp=sharing&ouid=108924017189271619620&rtpof=true&sd=true
+sheet:
+Entri_Keluarga: https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?gid=515567017#gid=515567017
+403_Lapangan: https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?gid=842096498#gid=842096498 
+601_Pendidikan_SLS: https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?gid=455951459#gid=455951459
+602_Kesehatan_SLS: https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?gid=622379610#gid=622379610 
+701_Agama: https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?gid=866475550#gid=866475550
+702_Disabilitas: https://docs.google.com/spreadsheets/d/1_eRZFFXR67qRl7nzZ8lSe7d5Tp88xnEe/edit?gid=638945844#gid=638945844
+
+pop up spreadsheet:
+
+https://docs.google.com/spreadsheets/d/1DlOHH6M3QiEot8Jv_ik-XUIpCx9Q-BzJJVo3H8UB6pI/edit?usp=sharing

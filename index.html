@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desa Cantik — Kabupaten Buton Utara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:   #0A2A1A;
+  --green:    #1B6E3C;
+  --emerald:  #00C47A;
+  --sand:     #F0EBE0;
+  --sea:      #3B9FD4;
+  --ink:      #0D1F14;
+  --mist:     #C6D9CC;
+  --text:     #1A2E1E;
+  --muted:    #5A7A63;
+  --surface:  #FAFCF9;
+  --card-r:   1.25rem;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--surface);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;mix-blend-mode:multiply;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 2.5rem;
+  background:rgba(10,42,26,0);
+  transition:background .4s, backdrop-filter .4s, box-shadow .4s;
+}
+nav.scrolled{
+  background:rgba(10,42,26,0.92);
+  backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 rgba(0,196,122,.12);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:.75rem;
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:#fff;letter-spacing:.01em;
+  text-decoration:none;
+}
+.nav-logo svg{width:36px;height:36px;flex-shrink:0}
+.nav-badge{
+  font-family:'DM Sans',sans-serif;
+  font-size:.65rem;font-weight:600;letter-spacing:.08em;
+  background:rgba(0,196,122,.18);color:var(--emerald);
+  border:1px solid rgba(0,196,122,.35);
+  border-radius:999px;padding:.25rem .6rem;
+  text-transform:uppercase;
+}
+.nav-pill{
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:999px;padding:.5rem 1rem;
+  color:rgba(255,255,255,.85);
+  font-size:.875rem;font-weight:500;
+  text-decoration:none;transition:.2s;
+}
+.nav-pill:hover{background:rgba(0,196,122,.2);color:#fff;border-color:rgba(0,196,122,.4)}
+.nav-pill svg{width:16px;height:16px}
+
+/* ── HERO ── */
+.hero{
+  min-height:100svh;
+  background:var(--forest);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:7rem 2rem 5rem;
+}
+
+/* Animated radial gradient bg */
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 80%, rgba(27,110,60,.55) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(59,159,212,.2) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(0,196,122,.12) 0%, transparent 60%),
+    var(--forest);
+  animation:bgpulse 8s ease-in-out infinite alternate;
+}
+@keyframes bgpulse{
+  from{opacity:1}
+  to{opacity:.85}
+}
+
+/* Buton krawang-inspired pattern */
+.hero-pattern{
+  position:absolute;inset:0;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1'%3E%3Cpath d='M40 5 L75 40 L40 75 L5 40 Z'/%3E%3Cpath d='M40 15 L65 40 L40 65 L15 40 Z'/%3E%3Cpath d='M40 25 L55 40 L40 55 L25 40 Z'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3Ccircle cx='5' cy='5' r='2'/%3E%3Ccircle cx='75' cy='5' r='2'/%3E%3Ccircle cx='5' cy='75' r='2'/%3E%3Ccircle cx='75' cy='75' r='2'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Floating orbs */
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(80px);pointer-events:none;
+  animation:float 12s ease-in-out infinite;
+}
+.orb-1{width:400px;height:400px;background:rgba(0,196,122,.12);top:-100px;right:-80px;animation-delay:0s}
+.orb-2{width:300px;height:300px;background:rgba(59,159,212,.1);bottom:-50px;left:-60px;animation-delay:-4s}
+.orb-3{width:200px;height:200px;background:rgba(27,110,60,.2);top:40%;left:15%;animation-delay:-8s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(20px,-30px) scale(1.05)}
+  66%{transform:translate(-15px,20px) scale(.97)}
+}
+
+/* Scroll indicator rings */
+.hero-rings{
+  position:absolute;bottom:-1px;left:50%;
+  transform:translateX(-50%);
+  width:600px;height:200px;
+  background:radial-gradient(ellipse at bottom, var(--surface) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.hero-inner{position:relative;z-index:2;text-align:center;max-width:780px}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.78rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--emerald);
+  margin-bottom:1.75rem;
+  opacity:0;animation:fadeUp .7s .2s ease forwards;
+}
+.hero-eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--emerald);
+  box-shadow:0 0 0 3px rgba(0,196,122,.25);
+  animation:ping 2s ease infinite;
+}
+@keyframes ping{
+  0%{box-shadow:0 0 0 3px rgba(0,196,122,.25)}
+  50%{box-shadow:0 0 0 7px rgba(0,196,122,.1)}
+  100%{box-shadow:0 0 0 3px rgba(0,196,122,.25)}
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.5rem,6.5vw,5.5rem);
+  font-weight:900;
+  color:#fff;line-height:1.05;
+  letter-spacing:-.02em;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .8s .35s ease forwards;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--emerald),#00e890);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-size:1.1rem;color:rgba(255,255,255,.65);
+  max-width:520px;margin:0 auto 2.5rem;
+  font-weight:300;line-height:1.7;
+  opacity:0;animation:fadeUp .8s .5s ease forwards;
+}
+
+.hero-stats{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:999px;
+  padding:.5rem;
+  margin-bottom:3.5rem;
+  width:fit-content;
+  margin-left:auto;margin-right:auto;
+  opacity:0;animation:fadeUp .8s .65s ease forwards;
+}
+.hero-stat{
+  display:flex;flex-direction:column;align-items:center;
+  padding:.6rem 1.75rem;
+}
+.hero-stat + .hero-stat{
+  border-left:1px solid rgba(255,255,255,.12);
+}
+.hero-stat strong{
+  font-family:'DM Sans',sans-serif;
+  font-size:1.4rem;font-weight:700;
+  color:#fff;line-height:1;
+}
+.hero-stat span{
+  font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-top:.2rem;
+}
+
+.hero-scroll{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:rgba(255,255,255,.4);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;
+  opacity:0;animation:fadeUp .8s .8s ease forwards;
+  cursor:pointer;transition:.2s;
+}
+.hero-scroll:hover{color:rgba(255,255,255,.7)}
+.scroll-arrow{
+  width:32px;height:32px;border:1px solid rgba(255,255,255,.2);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  animation:bounce 2s ease infinite;
+}
+.scroll-arrow svg{width:14px;height:14px}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── SECTION HEADER ── */
+.section-header{
+  text-align:center;
+  padding:5rem 2rem 3rem;
+}
+.section-kicker{
+  display:inline-block;
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);margin-bottom:.75rem;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.75rem,4vw,2.75rem);
+  font-weight:700;color:var(--ink);
+  line-height:1.15;margin-bottom:.75rem;
+}
+.section-desc{
+  color:var(--muted);max-width:500px;
+  margin:0 auto;font-size:.95rem;line-height:1.7;
+}
+
+/* ── LOKUS CARDS ── */
+.cards-wrap{
+  padding:0 2rem 6rem;
+  max-width:1240px;margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+.lokus-card{
+  border-radius:var(--card-r);
+  overflow:hidden;
+  border:1px solid var(--mist);
+  background:#fff;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+  cursor:pointer;
+  text-decoration:none;
+}
+.lokus-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 24px 60px rgba(10,42,26,.14);
+}
+
+/* Card Top Visual */
+.card-visual{
+  height:220px;
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+  padding:1.5rem;
+  flex-shrink:0;
+}
+
+/* MALALANDA — Deep sea / nelayan */
+.card--malalanda .card-visual{
+  background:linear-gradient(145deg, #061A2E 0%, #0D4A6E 55%, #1A7A9A 100%);
+}
+/* LAANGKE — Green / desa ibu kota kecamatan */
+.card--laangke .card-visual{
+  background:linear-gradient(145deg, #0A2A1A 0%, #1B6E3C 55%, #2EA55A 100%);
+}
+/* LAKONEA — Urban warm */
+.card--lakonea .card-visual{
+  background:linear-gradient(145deg, #1A1A0A 0%, #5A6E1B 55%, #8BA52E 100%);
+}
+
+.card-visual-pattern{
+  position:absolute;inset:0;opacity:.08;
+}
+.card-visual-glow{
+  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+  width:200px;height:100px;border-radius:50%;
+  filter:blur(40px);
+}
+.card--malalanda .card-visual-glow{background:#1AADE0}
+.card--laangke .card-visual-glow{background:var(--emerald)}
+.card--lakonea .card-visual-glow{background:#C4B800}
+
+.card-illustration{
+  position:absolute;right:1.25rem;top:1.25rem;
+  width:100px;height:100px;
+  opacity:.25;
+  transition:opacity .35s, transform .35s;
+}
+.lokus-card:hover .card-illustration{opacity:.4;transform:scale(1.08)}
+
+.card-type{
+  position:relative;z-index:2;
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;padding:.3rem .65rem;
+}
+.card-type-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.card--malalanda .card-type-dot{background:var(--emerald)}
+.card--laangke .card-type-dot{background:#7EC9EF}
+.card--lakonea .card-type-dot{background:#D4C840}
+
+/* Card Body */
+.card-body{
+  padding:1.5rem;
+  flex:1;display:flex;flex-direction:column;
+  gap:1rem;
+}
+.card-kec{
+  font-size:.72rem;color:var(--muted);font-weight:500;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.card-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--ink);line-height:1.15;
+  margin-top:.15rem;
+}
+.card-desc{
+  font-size:.9rem;color:var(--muted);line-height:1.65;
+  flex:1;
+}
+
+/* Card Indicators */
+.card-indicators{
+  display:flex;gap:.5rem;flex-wrap:wrap;
+}
+.indicator{
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.72rem;font-weight:500;color:var(--muted);
+  background:var(--surface);
+  border:1px solid var(--mist);
+  border-radius:999px;padding:.3rem .65rem;
+}
+.indicator svg{width:12px;height:12px;flex-shrink:0}
+.card--malalanda .indicator svg{color:#1A7A9A}
+.card--laangke .indicator svg{color:var(--green)}
+.card--lakonea .indicator svg{color:#6E8C1B}
+
+/* Card CTA footer */
+.card-cta{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.5rem;
+  border-top:1px solid var(--mist);
+  font-size:.875rem;font-weight:600;
+  transition:.25s;
+}
+.card--malalanda .card-cta{color:#1A7A9A}
+.card--laangke .card-cta{color:var(--green)}
+.card--lakonea .card-cta{color:#6E8C1B}
+
+.cta-arrow{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .25s;
+  flex-shrink:0;
+}
+.card--malalanda .cta-arrow{background:rgba(26,122,154,.1)}
+.card--laangke .cta-arrow{background:rgba(27,110,60,.1)}
+.card--lakonea .cta-arrow{background:rgba(110,140,27,.1)}
+.cta-arrow svg{width:14px;height:14px}
+.lokus-card:hover .cta-arrow{transform:translate(4px,-4px)}
+
+/* URL label */
+.card-url{
+  font-size:.7rem;font-weight:400;
+  color:var(--muted);font-family:'DM Sans',sans-serif;
+  opacity:.7;
+}
+
+/* ── INFO STRIP ── */
+.info-strip{
+  background:var(--forest);
+  padding:4rem 2rem;
+  text-align:center;
+}
+.info-strip-inner{
+  max-width:760px;margin:0 auto;
+}
+.info-strip p{
+  color:rgba(255,255,255,.55);
+  font-size:.9rem;line-height:1.8;
+}
+.info-strip strong{color:rgba(255,255,255,.9)}
+.info-strip-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;color:#fff;
+  margin-bottom:.75rem;
+}
+.strip-logo{
+  display:inline-flex;align-items:center;gap:.75rem;
+  margin-bottom:1.5rem;
+}
+.strip-bps{
+  width:40px;height:40px;border-radius:.5rem;
+  background:rgba(0,196,122,.15);
+  border:1px solid rgba(0,196,122,.3);
+  display:flex;align-items:center;justify-content:center;
+}
+.strip-bps svg{width:24px;height:24px;color:var(--emerald)}
+.strip-label{
+  font-size:.8rem;color:rgba(255,255,255,.6);
+  text-align:left;line-height:1.3;
+}
+.strip-label strong{color:#fff;font-size:.95rem;display:block}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);
+  padding:2.5rem 2rem;
+  text-align:center;
+}
+.footer-inner{max-width:680px;margin:0 auto}
+.footer-nav{
+  display:flex;align-items:center;justify-content:center;gap:2rem;
+  margin-bottom:1.5rem;flex-wrap:wrap;
+}
+.footer-nav a{
+  color:rgba(255,255,255,.45);font-size:.85rem;
+  text-decoration:none;transition:.2s;
+}
+.footer-nav a:hover{color:var(--emerald)}
+.footer-copy{color:rgba(255,255,255,.25);font-size:.78rem;line-height:1.8}
+.footer-divider{width:1px;height:14px;background:rgba(255,255,255,.12)}
+
+
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .cards-wrap{grid-template-columns:1fr;max-width:480px}
+  .hero-stats{flex-wrap:wrap;border-radius:1rem;gap:.5rem}
+  .hero-stat + .hero-stat{border-left:none;border-top:1px solid rgba(255,255,255,.12)}
+  nav{padding:1rem 1.25rem}
+  .nav-pill span{display:none}
+}
+@media(max-width:600px){
+  .hero h1{font-size:2.5rem}
+  .section-header{padding:3.5rem 1.25rem 2rem}
+  .cards-wrap{padding:0 1.25rem 4rem}
+  .card-visual{height:180px}
+}
+
+/* Focus ring */
+.lokus-card:focus-visible{outline:3px solid var(--emerald);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <!-- BPS-inspired logo mark -->
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="22" fill="rgba(0,196,122,.15)"/>
+      <path d="M28 28 L28 72 L40 72 C54 72 60 65 60 50 C60 35 54 28 40 28 Z M36 36 L39 36 C47 36 51 40 51 50 C51 60 47 64 39 64 L36 64 Z" fill="#00C47A"/>
+      <path d="M72 38 C72 32 66 28 58 28 L58 36 C62 36 64 39 64 44 L64 56 C64 61 62 64 58 64 L58 72 C66 72 72 68 72 62 Z" fill="#00C47A" opacity=".6"/>
+    </svg>
+    Desa Cantik
+    <span class="nav-badge">Buton Utara</span>
+  </a>
+  <a href="#lokus" class="nav-pill">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+    <span>Pilih Lokus</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      BPS Kabupaten Buton Utara · Program Desa Cantik 2025
+    </div>
+
+    <h1>
+      Data Desa,<br>
+      Masa Depan yang<br>
+      <em>Lebih Cantik</em>
+    </h1>
+
+    <p class="hero-sub">
+      Sistem informasi statistik tingkat Rukun Tetangga untuk mendukung pembangunan berbasis data di tiga lokus percontohan Kabupaten Buton Utara.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>3</strong>
+        <span>Lokus</span>
+      </div>
+      <div class="hero-stat">
+        <strong>15</strong>
+        <span>Rukun Tetangga</span>
+      </div>
+      <div class="hero-stat">
+        <strong>5.420</strong>
+        <span>Warga</span>
+      </div>
+      <div class="hero-stat">
+        <strong>2025</strong>
+        <span>Tahun Data</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll" onclick="document.getElementById('lokus').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </div>
+      Lihat Lokus
+    </div>
+  </div>
+
+  <div class="hero-rings"></div>
+</section>
+
+<!-- SECTION HEADER -->
+<div id="lokus" class="section-header">
+  <div class="section-kicker">Lokus Program 2025</div>
+  <h2 class="section-title">Tiga Wilayah Percontohan</h2>
+  <p class="section-desc">Pilih wilayah untuk mengakses dashboard statistik, profil RT, dan data pembangunan masing-masing lokus.</p>
+</div>
+
+<!-- LOKUS CARDS -->
+<div class="cards-wrap">
+
+  <!-- CARD 1 : DESA MALALANDA -->
+  <a href="https://malalanda.buton-utara.net/" class="lokus-card card--malalanda" target="_blank" rel="noopener">
+    <div class="card-visual">
+      <div class="card-visual-pattern">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="krawang-m" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 2L38 20L20 38L2 20Z" fill="none" stroke="white" stroke-width=".8"/><circle cx="20" cy="20" r="2.5" fill="white"/></pattern></defs>
+          <rect width="100%" height="100%" fill="url(#krawang-m)"/>
+        </svg>
+      </div>
+      <div class="card-visual-glow"></div>
+
+      <!-- Nelayan / fishing village illustration -->
+      <svg class="card-illustration" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Water waves -->
+        <path d="M5 82 Q18 74 30 82 Q42 90 55 82 Q68 74 80 82 Q92 90 105 82 Q113 77 118 82" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <path d="M5 92 Q18 84 30 92 Q42 100 55 92 Q68 84 80 92 Q92 100 105 92 Q113 87 118 92" stroke="white" stroke-width="1.2" stroke-linecap="round" fill="none" opacity=".5"/>
+        <!-- Fishing boat hull -->
+        <path d="M35 75 L85 75 L78 85 L42 85 Z" stroke="white" stroke-width="2" stroke-linejoin="round" fill="none"/>
+        <!-- Mast -->
+        <path d="M60 75 L60 45" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <!-- Sail -->
+        <path d="M60 47 L60 68 L80 60 Z" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <!-- Small flag -->
+        <path d="M60 45 L70 49 L60 53" stroke="white" stroke-width="1" stroke-linejoin="round" fill="none"/>
+        <!-- Fish net suggested -->
+        <path d="M15 60 Q20 55 25 60 M25 60 Q30 55 35 60 M20 65 Q25 60 30 65" stroke="white" stroke-width="1" stroke-linecap="round" fill="none" opacity=".6"/>
+        <!-- Moon / night sky -->
+        <path d="M95 22 Q88 18 87 10 Q96 8 100 16 Q104 24 95 22Z" stroke="white" stroke-width="1.5" fill="none"/>
+        <circle cx="105" cy="12" r="1.5" fill="white"/>
+        <circle cx="112" cy="20" r="1" fill="white"/>
+        <circle cx="98" cy="6" r="1" fill="white"/>
+        <!-- Laut Banda label area - horizon line -->
+        <path d="M5 72 L118 72" stroke="white" stroke-width=".8" opacity=".3"/>
+      </svg>
+
+      <div class="card-type">
+        <span class="card-type-dot"></span>
+        Desa · Nelayan
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div>
+        <div class="card-kec">Kecamatan Kulisusu</div>
+        <div class="card-name">Desa<br>Malalanda</div>
+      </div>
+      <p class="card-desc">Desa nelayan pesisir selatan yang berbatasan langsung dengan Laut Banda, sekitar 12 km dari Ereke. Seluruh keluarga telah menikmati listrik PLN.</p>
+      <div class="card-indicators">
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          1.450 Warga
+        </span>
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          5 RT
+        </span>
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2.5 19h19M3 14c2-2 4-3 6-3s4 2 6 0 4-3 6-1M5 19V9M19 19V9"/></svg>
+          Pesisir Laut Banda
+        </span>
+      </div>
+    </div>
+
+    <div class="card-cta">
+      <div>
+        <div>Buka Dashboard →</div>
+        <div class="card-url">malalanda.buton-utara.net</div>
+      </div>
+      <div class="cta-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- CARD 2 : DESA LAANGKE -->
+  <a href="https://laangke.buton-utara.net/" class="lokus-card card--laangke" target="_blank" rel="noopener">
+    <div class="card-visual">
+      <div class="card-visual-pattern">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="krawang-l" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 2L38 20L20 38L2 20Z" fill="none" stroke="white" stroke-width=".8"/><circle cx="20" cy="20" r="2.5" fill="white"/></pattern></defs>
+          <rect width="100%" height="100%" fill="url(#krawang-l)"/>
+        </svg>
+      </div>
+      <div class="card-visual-glow"></div>
+
+      <!-- Desa dekat ibu kota kecamatan — rumah, jalan, pantai tenang -->
+      <svg class="card-illustration" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sea/horizon -->
+        <path d="M5 78 Q30 73 60 78 Q90 83 115 78" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M5 88 Q30 83 60 88 Q90 93 115 88" stroke="white" stroke-width="1" stroke-linecap="round" fill="none" opacity=".4"/>
+        <!-- Village houses -->
+        <rect x="10" y="58" width="20" height="20" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M8 58 L20 44 L32 58" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <rect x="16" y="65" width="8" height="13" stroke="white" stroke-width="1" fill="none"/>
+        <rect x="40" y="54" width="24" height="24" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M38 54 L52 39 L66 54" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <rect x="47" y="63" width="9" height="15" stroke="white" stroke-width="1" fill="none"/>
+        <rect x="75" y="61" width="16" height="17" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M73 61 L83 50 L93 61" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <!-- Road to kecamatan -->
+        <path d="M52 78 L52 110" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <path d="M45 78 L59 78" stroke="white" stroke-width="1" stroke-linecap="round" opacity=".4"/>
+        <!-- Sun bright -->
+        <circle cx="100" cy="22" r="11" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M100 6 L100 12 M100 32 L100 38 M116 22 L110 22 M84 22 L90 22 M111 11 L107 15 M89 33 L93 29" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+
+      <div class="card-type">
+        <span class="card-type-dot"></span>
+        Desa · Ibu Kota Kecamatan
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div>
+        <div class="card-kec">Kecamatan Kulisusu</div>
+        <div class="card-name">Desa<br>Laangke</div>
+      </div>
+      <p class="card-desc">Desa pesisir yang terletak di kawasan ibu kota Kecamatan Kulisusu, tidak jauh dari pusat aktivitas Ereke. Kondisi relatif tenang dengan listrik PLN merata.</p>
+      <div class="card-indicators">
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          1.120 Warga
+        </span>
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          5 RT
+        </span>
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Dekat Ereke
+        </span>
+      </div>
+    </div>
+
+    <div class="card-cta">
+      <div>
+        <div>Buka Dashboard →</div>
+        <div class="card-url">laangke.buton-utara.net</div>
+      </div>
+      <div class="cta-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- CARD 3 : KELURAHAN LAKONEA -->
+  <a href="https://lakonea.buton-utara.net/" class="lokus-card card--lakonea" target="_blank" rel="noopener">
+    <div class="card-visual">
+      <div class="card-visual-pattern">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="krawang-k" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 2L38 20L20 38L2 20Z" fill="none" stroke="white" stroke-width=".8"/><circle cx="20" cy="20" r="2.5" fill="white"/></pattern></defs>
+          <rect width="100%" height="100%" fill="url(#krawang-k)"/>
+        </svg>
+      </div>
+      <div class="card-visual-glow"></div>
+
+      <!-- Lakonea: kelurahan + pelabuhan -->
+      <svg class="card-illustration" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Water / laut -->
+        <path d="M5 82 Q30 77 60 82 Q90 87 115 82" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M5 92 Q30 87 60 92 Q90 97 115 92" stroke="white" stroke-width="1" stroke-linecap="round" fill="none" opacity=".4"/>
+        <!-- Dermaga / jetty -->
+        <rect x="48" y="65" width="24" height="5" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M52 70 L52 85" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M60 70 L60 87" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M68 70 L68 85" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M48 85 L72 85" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Ferry boat at dock -->
+        <rect x="55" y="74" width="28" height="10" stroke="white" stroke-width="1.5" fill="none" rx="2"/>
+        <rect x="60" y="68" width="14" height="7" stroke="white" stroke-width="1" fill="none"/>
+        <path d="M63 68 L63 63 L73 63 L73 68" stroke="white" stroke-width="1" stroke-linejoin="round" fill="none"/>
+        <!-- Kelurahan building (kantor) -->
+        <rect x="8" y="50" width="28" height="32" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M6 50 L22 36 L38 50" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <rect x="14" y="55" width="7" height="7" stroke="white" stroke-width="1" fill="none"/>
+        <rect x="25" y="55" width="7" height="7" stroke="white" stroke-width="1" fill="none"/>
+        <rect x="16" y="68" width="11" height="14" stroke="white" stroke-width="1" fill="none"/>
+        <!-- Flag on kantor -->
+        <path d="M22 36 L22 26" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M22 26 L30 29 L22 32" stroke="white" stroke-width="1" stroke-linejoin="round" fill="none"/>
+        <!-- Ground -->
+        <path d="M5 82 L47 82" stroke="white" stroke-width=".8" opacity=".3"/>
+        <path d="M84 82 L115 82" stroke="white" stroke-width=".8" opacity=".3"/>
+        <!-- Sun -->
+        <circle cx="100" cy="22" r="10" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M100 7 L100 13 M100 31 L100 37 M115 22 L109 22 M85 22 L91 22 M111 11 L106 16 M90 33 L94 28 M111 33 L106 28 M90 11 L94 16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+
+      <div class="card-type">
+        <span class="card-type-dot"></span>
+        Kelurahan · Ada Pelabuhan
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div>
+        <div class="card-kec">Kecamatan Kulisusu</div>
+        <div class="card-name">Kelurahan<br>Lakonea</div>
+      </div>
+      <p class="card-desc">Kelurahan di kawasan inti Kecamatan Kulisusu, sangat dekat pusat pemerintahan Ereke. Memiliki pelabuhan dan menjadi titik mobilitas utama warga Buton Utara.</p>
+      <div class="card-indicators">
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          2.850 Warga
+        </span>
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          5 RT
+        </span>
+        <span class="indicator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+          Pelabuhan
+        </span>
+      </div>
+    </div>
+
+    <div class="card-cta">
+      <div>
+        <div>Buka Dashboard →</div>
+        <div class="card-url">lakonea.buton-utara.net</div>
+      </div>
+      <div class="cta-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="strip-logo">
+      <div class="strip-bps">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <div class="strip-label">
+        <strong>BPS Kabupaten Buton Utara</strong>
+        Badan Pusat Statistik
+      </div>
+    </div>
+    <h3 class="info-strip-title">Tentang Desa Cantik</h3>
+    <p>
+      <strong>Desa Cantik (Cinta Statistik)</strong> adalah program percepatan BPS dalam pembinaan statistik sektoral tingkat desa/kelurahan. 
+      Tujuan utama: meningkatkan kompetensi aparatur desa dalam pengelolaan data, agar perencanaan pembangunan dapat lebih tepat sasaran secara <em>data-driven</em>.<br><br>
+      Tiga lokus percontohan di Kecamatan Kulisusu: Desa Malalanda, Desa Laangke, dan Kelurahan Lakonea.
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <nav class="footer-nav">
+      <a href="#beranda">Beranda</a>
+      <span class="footer-divider"></span>
+      <a href="https://malalanda.buton-utara.net/" target="_blank">Malalanda</a>
+      <span class="footer-divider"></span>
+      <a href="https://laangke.buton-utara.net/" target="_blank">Laangke</a>
+      <span class="footer-divider"></span>
+      <a href="https://lakonea.buton-utara.net/" target="_blank">Lakonea</a>
+      <span class="footer-divider"></span>
+      <a href="mailto:bps7405@bps.go.id">Kontak</a>
+    </nav>
+    <div class="footer-copy">
+      © 2025 BPS Kabupaten Buton Utara &nbsp;·&nbsp; Desa Cantik (Cinta Statistik)<br>
+      Program Pembinaan Statistik Sektoral Desa/Kelurahan · Kecamatan Kulisusu
+    </div>
+  </div>
+</footer>
+
+<script>
+// Sticky nav color change on scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Entrance animations via IntersectionObserver
+const cards = document.querySelectorAll('.lokus-card');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = `${i * 80}ms`;
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+cards.forEach(card => {
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(30px)';
+  card.style.transition = 'opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1)';
+  obs.observe(card);
+});
+
+// Respect prefers-reduced-motion
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  cards.forEach(c => {
+    c.style.opacity = '1';
+    c.style.transform = 'none';
+  });
+  document.querySelectorAll('.orb').forEach(o => o.style.animation = 'none');
+}
+</script>
+</body>
+</html>
